@@ -7,15 +7,31 @@ define(['backbone', 'views/search', 'views/results', 'views/detail'], function(B
     initialize: function(options) {
       this.contractors = options.contractors;
 
+      // When someone searches, take us back to the search page
+      this.contractors.on('search', function() {
+        this.navigate("", {trigger: true});
+      }, this);
+
       this._setupViews();
     },
 
     routes: {
-      "search": "search",
+      "": "search",
       "entry/:id": "entry"
     },
 
+    search: function() {
+      // Empty detail view
+      if(this.hasOwnProperty('detail')) {
+        this.detail.$el.empty();
+      }
+    },
+
     entry: function(id) {
+      // Empty search results view, clear searh box
+      this.contractors.clearSearch();
+
+      // Setup detail view
       var self = this;
       var contractor = this.contractors.get(id);
       contractor.fetch({

@@ -1,4 +1,4 @@
-require(['jquery', 'collections/contractors', 'views/search', 'views/results', 'lib/router'], function($, Contractors, SearchBox, Results, Router) {
+require(['jquery', 'collections/contractors','lib/router'], function($, Contractors, Router) {
 
   'use strict';
 

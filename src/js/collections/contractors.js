@@ -35,6 +35,11 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
         this.trigger('search', r);
         this.lastQ = q;
       }
+    },
+
+    clearSearch: function() {
+      this.lastQ = null;
+      this.trigger('search:clear');
     }
 
   });
