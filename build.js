@@ -37,6 +37,7 @@ connection.end();
 // Parse the rows before saving them as JSON
 function parseRows(rows) {
   return rows.map(function(row, i) {
+    row.searchable = row.name.split(' ');
     row.id = i;
     return row;
   });

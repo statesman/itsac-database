@@ -79,7 +79,7 @@
       </div>
 
       <div class="form">
-        <input id="search" class="form-control input-lg" type="text" placeholder="Search by name">
+        <input id="search" class="form-control input-lg" type="text" placeholder="Search by last name">
       </div>
 
       <div id="detail"></div>

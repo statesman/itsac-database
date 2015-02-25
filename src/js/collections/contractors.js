@@ -8,15 +8,15 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
 
       // When the data are loaded, setup the Fuse index
       var options = {
-        keys: ['name'],
-        threshold: 0.5
+        keys: ['searchable'],
+        threshold: 0.3
       };
       this.fuse = new Fuse(models, options);
     },
 
     model: Contractor,
 
-    url: 'data/contractors.json',
+    url: 'data/contractors/contractors.json',
 
     search: function(q) {
       // If the query is empty, show top contractors

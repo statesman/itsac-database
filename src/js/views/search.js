@@ -5,7 +5,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
   return Backbone.View.extend({
 
     initialize: function() {
-      this.$el.on('keyup', $.proxy(this.searchHandler, this));
+      this.$el.on('input', $.proxy(this.searchHandler, this));
       this.collection.on('search:clear', this.clear, this);
     },
 
