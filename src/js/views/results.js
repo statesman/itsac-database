@@ -12,7 +12,11 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
     template: tpl.results,
 
     render: function(results) {
-      this.$el.html(this.template(results));
+      this.$el.html(this.template({
+        count: results.length,
+        total: this.collection.length,
+        results: results
+      }));
     },
 
     clear: function(results) {

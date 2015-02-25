@@ -5,7 +5,6 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
   return Backbone.Collection.extend({
 
     initialize: function(models) {
-
       // When the data are loaded, setup the Fuse index
       var options = {
         keys: ['searchable'],
@@ -22,8 +21,7 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
       // If the query is empty, show top contractors
       if(q.length === 0) {
         // TODO: Fire an evnet that shows top contractors
-        this.trigger('search', null);
-        this.lastQ = null;
+        this.trigger('search:clear');
       }
       // Don't re-run if the query hasn't changed
       if(q === this.lastQ) {

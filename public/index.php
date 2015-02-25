@@ -84,7 +84,7 @@
 
       <div id="detail"></div>
 
-      <div id="results"></div>
+      <div id="results" class="table-responsive"></div>
     </article>
 
     <div class="clearfix" id="ads">

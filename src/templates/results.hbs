@@ -1,3 +1,38 @@
-{{#each this}}
-  <p>{{name}}, {{agency}}, {{vendor}} <a href="#/entry/{{id}}">#/entry/{{id}}</a></p>
-{{/each}}
+
+{{#if results}}
+  <p><small>{{count}} of {{total}} entries match your query</small></p>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Agency</th>
+        <th>Vendor</th>
+        <th>Avg. rate</th>
+        <th>Min. rate</th>
+        <th>Max rate</th>
+        <th>Hours</th>
+        <th>Months</th>
+        <th>Sales</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each results}}
+        <tr>
+          <th>{{name}}</th>
+          <td>{{agency}}</td>
+          <td>{{vendor}}</td>
+          <td>{{avgRate}}</td>
+          <td>{{minRate}}</td>
+          <td>{{maxRate}}</td>
+          <td>{{hours}}</td>
+          <td>{{monthsWorked}}</td>
+          <td>{{sales}}</td>
+          <td><a href="#/entry/{{id}}">Details</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  No results.
+{{/if}}
