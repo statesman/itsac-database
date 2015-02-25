@@ -29,3 +29,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+### Project data ###
+public/data/*
