@@ -82,6 +82,8 @@
         <input id="search" class="form-control input-lg" type="text" placeholder="Search by name">
       </div>
 
+      <div id="detail"></div>
+
       <div id="results"></div>
     </article>
 

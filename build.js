@@ -27,8 +27,9 @@ connection.query(contractorsQuery, function(err, rows, fields) {
 
   console.log("Writing contractors.json file.");
 
+  rows = parseRows(rows);
   fs.writeFileSync('public/data/contractors.json', JSON.stringify(rows));
-  buldIndividualFiles(parseRows(rows));
+  buldIndividualFiles(rows);
 });
 
 connection.end();
@@ -73,7 +74,10 @@ function buildContractorFile(row, cb) {
 
       if(err) return cb(err);
 
-      fs.writeFile('public/data/contractors/' + row.id + '.json', JSON.stringify(person), function (err) {
+      // Add the ID to the JSON file
+      row.transactions = person;
+
+      fs.writeFile('public/data/contractors/' + row.id + '.json', JSON.stringify(row), function (err) {
         if (err) return cb(err);
 
         cb();

@@ -1,20 +1,15 @@
-require(['jquery', 'collections/contractors', 'views/search', 'views/results'], function($, Contractors, SearchBox, Results) {
+require(['jquery', 'collections/contractors', 'views/search', 'views/results', 'lib/router'], function($, Contractors, SearchBox, Results, Router) {
 
   'use strict';
 
   $(function() {
 
-    var contractors = new Contractors();
-    contractors.fetch();
+    $.getJSON('data/contractors.json', function(data) {
+        new Router({
+          contractors: new Contractors(data)
+        });
 
-    var search = new SearchBox({
-      el: '#search',
-      collection: contractors
-    });
-
-    var results = new Results({
-      el: '#results',
-      collection: contractors
+        Backbone.history.start();
     });
 
   });

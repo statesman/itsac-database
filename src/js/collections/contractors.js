@@ -4,16 +4,14 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
 
   return Backbone.Collection.extend({
 
-    initialize: function() {
+    initialize: function(models) {
 
       // When the data are loaded, setup the Fuse index
-      this.on('sync', function() {
-        var options = {
-          keys: ['name'],
-          threshold: 0.5
-        };
-        this.fuse = new Fuse(this.toJSON(), options);
-      }, this);
+      var options = {
+        keys: ['name'],
+        threshold: 0.5
+      };
+      this.fuse = new Fuse(models, options);
     },
 
     model: Contractor,
@@ -25,6 +23,7 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
       if(q.length === 0) {
         // TODO: Fire an evnet that shows top contractors
         this.trigger('search', null);
+        this.lastQ = null;
       }
       // Don't re-run if the query hasn't changed
       if(q === this.lastQ) {

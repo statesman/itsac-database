@@ -5,7 +5,7 @@ define(['backbone'], function(Backbone) {
   return Backbone.Model.extend({
 
     url: function() {
-      return 'data/contractors/' + this.id;
+      return 'data/contractors/' + this.id + '.json';
     }
 
   });
