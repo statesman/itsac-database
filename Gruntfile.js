@@ -110,6 +110,22 @@ module.exports = function(grunt) {
         files: ['src/templates/**/*.hbs'],
         tasks: ['clean:js', 'handlebars', 'requirejs']
       }
+    },
+
+    // Deploy to CMG servers with FTP
+    ftpush: {
+      stage: {
+        auth: {
+          host: 'host.coxmediagroup.com',
+          port: 21,
+          authKey: 'cmg'
+        },
+        src: 'public',
+        dest: '/stage_aas/projects/news/itsac-database',
+        exclusions: ['dist/tmp','Thumbs.db'],
+        simple: true,
+        useList: false
+      }
     }
 
   });
@@ -122,6 +138,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-ftpush');
 
   grunt.registerTask('default', ['jshint', 'clean', 'copy', 'less', 'handlebars', 'requirejs']);
 

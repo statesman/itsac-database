@@ -4,6 +4,7 @@
 # Grunt usually preprocesses files such as coffeescript, compass... inside the .tmp directory
 .tmp/
 node_modules/
+.grunt/
 
 
 ### Bower ###
@@ -32,4 +33,5 @@ $RECYCLE.BIN/
 
 
 ### Project data ###
+.ftppass
 public/data/*
