@@ -19,7 +19,9 @@ var db = {
  */
 var connection = mysql.createConnection(db);
 
-var contractorsQuery = fs.readFileSync('contractors.sql', 'utf8');
+var allRows;
+
+var contractorsQuery = fs.readFileSync('queries/contractors.sql', 'utf8');
 
 console.log("Running all-contractors query.");
 
@@ -29,6 +31,7 @@ connection.query(contractorsQuery, function(err, rows, fields) {
   console.log("Writing contractors.json file.");
 
   rows = parseRows(rows);
+  allRows = rows;
   fs.writeFileSync('public/data/contractors.json', JSON.stringify(rows));
   buldIndividualFiles(rows);
 });
@@ -38,10 +41,16 @@ connection.end();
 // Parse the rows before saving them as JSON
 function parseRows(rows) {
   return rows.map(function(row, i) {
+    row.i = i;
     row.searchable = row.name.split(' ');
-    row.id = i;
+    row.id = buildSlug(row.name, i);
     return row;
   });
+}
+
+// Build a slug that can be used in the URL
+function buildSlug(name, i) {
+  return i.toString() + '.' + name.toLowerCase().replace(/\W/g, '');
 }
 
 /*
@@ -62,7 +71,8 @@ function buldIndividualFiles(rows) {
   });
 }
 
-var contractorQuery = fs.readFileSync('contractor.sql', 'utf8');
+var contractorQuery = fs.readFileSync('queries/contractor.sql', 'utf8');
+var topByAgencyQuery = fs.readFileSync('queries/top-agency-contractors.sql', 'utf8');
 
 // Build an individual contractor file
 function buildContractorFile(row, cb) {
@@ -72,20 +82,36 @@ function buildContractorFile(row, cb) {
     if (err) return cb(err);
 
     connection.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, transactions) {
-      connection.release();
-
       if(err) return cb(err);
 
-      // Add the ID to the JSON file
-      row.transactions = transactions.map(function(transaction) {
-        transaction.month = parseDate(transaction.month);
-        return transaction;
-      });
+      connection.query(topByAgencyQuery, [row.agency], function(err, topAgency) {
 
-      fs.writeFile('public/data/contractors/' + row.id + '.json', JSON.stringify(row), function (err) {
-        if (err) return cb(err);
+        connection.release();
 
-        cb();
+        if(err) return cb(err);
+
+        // Add the ID to the JSON file
+        row.transactions = transactions.map(function(transaction) {
+          transaction.month = parseDate(transaction.month);
+          return transaction;
+        });
+
+        row.topAgency = topAgency.map(function(top) {
+          var related = _.findWhere(allRows, {name: top.name, agency: row.agency});
+          top.id = related.id;
+          if(row.name === top.name && row.vendor === related.vendor) {
+            top.same = true;
+          }
+          return top;
+        });
+
+        fs.writeFile('public/data/contractors/' + row.i + '.json', JSON.stringify(row), function (err) {
+          if (err) return cb(err);
+
+          cb();
+        });
+
+
       });
     });
   });

@@ -19,6 +19,10 @@ define(['backbone', 'underscore', 'tpl', 'lib/format'], function(Backbone, _, tp
           return transaction;
         })
         .value();
+      data.topAgency = _.map(data.topAgency, function(top) {
+        top.amount = format.currency(top.amount);
+        return top;
+      });
 
       this.$el.html(this.template(data));
     }
