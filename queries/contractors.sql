@@ -6,7 +6,8 @@ SELECT `Staffing Contractor Name` as 'name',
   ROUND(SUM(`Purchase Amount`) / SUM(`Order Quantity`), 2) as 'avgRate',
   COUNT(DISTINCT `Purchase Month`) as 'monthsWorked',
   `Vendor Name` as 'vendor',
-  `Customer Name` as 'agency'
+  `Customer Name` as 'agency',
+  `Contract Number` as 'contract'
 FROM itsac
 GROUP BY `Staffing Contractor Name`, `Vendor Name`, `Customer Name`
 ORDER BY `sales` DESC
