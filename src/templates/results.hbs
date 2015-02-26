@@ -1,30 +1,32 @@
 {{#if results}}
   <h3>Search results</h3>
   <p>Not finding what you're looking for? Trying <a href="#/browse/page/1">browsing</a> the database.</p>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Contractor</th>
-        <th>Customer</th>
-        <th>Avg.&nbsp;Rate</th>
-        <th>Hours</th>
-        <th>Months</th>
-        <th>Sales</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each results}}
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
         <tr>
-          <td><a href="#/contractor/{{id}}">{{name}}</a><br /><small>{{vendor}}</small></td>
-          <td>{{agency}}</td>
-          <td>{{{rate}}}</td>
-          <td>{{hours}}</td>
-          <td>{{monthsWorked}}</td>
-          <td>{{sales}}</a></td>
+          <th>Contractor</th>
+          <th>Customer</th>
+          <th>Avg.&nbsp;Rate</th>
+          <th>Hours</th>
+          <th>Months</th>
+          <th>Sales</th>
         </tr>
-      {{/each}}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {{#each results}}
+          <tr>
+            <td><a href="#/contractor/{{id}}">{{name}}</a><br /><small>{{vendor}}</small></td>
+            <td>{{agency}}</td>
+            <td>{{{rate}}}</td>
+            <td>{{hours}}</td>
+            <td>{{monthsWorked}}</td>
+            <td>{{sales}}</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 {{else}}
   <div class="well"><strong>No entries match your query.</strong> Try searching by only last name or try <a href="#/browse/page/1">browsing</a> the database to find the contractor you're looking for.</div>
 {{/if}}
