@@ -1,7 +1,8 @@
 var mysql = require('mysql'),
     _ = require('underscore'),
     async = require('async'),
-    fs = require('fs');
+    fs = require('fs'),
+    moment = require('moment');
 
 /*
  * Default connection settings
@@ -70,13 +71,16 @@ function buildContractorFile(row, cb) {
   pool.getConnection(function(err, connection) {
     if (err) return cb(err);
 
-    connection.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, person) {
+    connection.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, transactions) {
       connection.release();
 
       if(err) return cb(err);
 
       // Add the ID to the JSON file
-      row.transactions = person;
+      row.transactions = transactions.map(function(transaction) {
+        transaction.month = parseDate(transaction.month);
+        return transaction;
+      });
 
       fs.writeFile('public/data/contractors/' + row.id + '.json', JSON.stringify(row), function (err) {
         if (err) return cb(err);
@@ -85,4 +89,9 @@ function buildContractorFile(row, cb) {
       });
     });
   });
+}
+
+// A date parser that turns SQL dates into ISO8601 for JavaScript
+function parseDate(d) {
+  return moment(d).toISOString();
 }

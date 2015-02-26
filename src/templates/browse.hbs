@@ -1,32 +1,26 @@
-<p><small>Showing {{first}}-{{last}} of {{total}} entries</small></p>
+<h3>All entries</h3>
+<p>Showing {{first}}-{{last}} of {{total}} entries. Click a name for additional details.</p>
+
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Agency</th>
-      <th>Vendor</th>
-      <th>Avg. rate</th>
-      <th>Min. rate</th>
-      <th>Max rate</th>
+      <th>Contractor</th>
+      <th>Customer</th>
+      <th>Avg.&nbsp;Rate</th>
       <th>Hours</th>
       <th>Months</th>
       <th>Sales</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each results}}
       <tr>
-        <th>{{name}}</th>
+        <td><a href="#/contractor/{{id}}">{{name}}</a><br /><small>{{vendor}}</small></td>
         <td>{{agency}}</td>
-        <td>{{vendor}}</td>
-        <td>{{avgRate}}</td>
-        <td>{{minRate}}</td>
-        <td>{{maxRate}}</td>
+        <td>{{{rate}}}</td>
         <td>{{hours}}</td>
         <td>{{monthsWorked}}</td>
-        <td>{{sales}}</td>
-        <td><a href="#/contractor/{{id}}">Details</a></td>
+        <td>{{sales}}</a></td>
       </tr>
     {{/each}}
   </tbody>

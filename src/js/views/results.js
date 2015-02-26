@@ -1,4 +1,4 @@
-define(['backbone', 'tpl'], function(Backbone, tpl) {
+define(['backbone', 'tpl', 'lib/format'], function(Backbone, tpl, format) {
 
   'use strict';
 
@@ -15,7 +15,7 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
       this.$el.html(this.template({
         count: results.length,
         total: this.collection.length,
-        results: results
+        results: format.tableRow(results)
       }));
     },
 

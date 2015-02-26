@@ -1,4 +1,4 @@
-define(['backbone', 'underscore'], function(Backbone, _) {
+define(['backbone', 'underscore', 'lib/format'], function(Backbone, _, format) {
 
   'use strict';
 
@@ -23,7 +23,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 
     helpText: function(results) {
       if(results.length > 0) {
-        return results.length + " of " + this.collection.length +
+        return results.length + " of " + format.wholeNum(this.collection.length) +
           " entries match your query.";
       }
       return null;

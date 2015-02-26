@@ -1,4 +1,4 @@
-define(['backbone', 'tpl'], function(Backbone, tpl) {
+define(['backbone', 'lib/format', 'tpl'], function(Backbone, format, tpl) {
 
   'use strict';
 
@@ -28,10 +28,10 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
     // Calculate the position number of the first and last items in the paginated
     // results
     first: function(number) {
-      return (this.collection.perPage * number) + 1;
+      return format.wholeNum((this.collection.perPage * number) + 1);
     },
     last: function(number) {
-      return Math.min((this.collection.perPage * (number + 1)), this.collection.length);
+      return format.wholeNum(Math.min((this.collection.perPage * (number + 1)), this.collection.length));
     },
 
     render: function(number, paged) {
@@ -41,8 +41,8 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
         first: this.first(number),
         last: this.last(number),
         count: this.collection.perPage,
-        total: this.collection.length,
-        results: paged
+        total: format.wholeNum(this.collection.length),
+        results: format.tableRow(paged)
       }));
     },
 

@@ -69,7 +69,7 @@
     </nav>
 
     <article class="container">
-      <div class="page-header">
+      <div class="header">
         <h4>Texas state government</h4>
         <h1>Search state IT contractors</h1>
         <p class="author">Interactive by Andrew Chavez, J. David McSwane and Andrea Ball, American-Statesman</p>
@@ -78,9 +78,14 @@
         <?php /**<p><a href="#">Related story ></a></p> **/ ?>
       </div>
 
-      <div id="search" class="form-group">
-        <input class="form-control input-lg" type="text" placeholder="Search by last name">
-        <p class="help-block"></p>
+      <div id="search" class="well well-lg">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control input-lg" type="text" placeholder="Search by last name">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+          </div>
+          <p class="help-block"></p>
+        </div>
       </div>
 
       <div id="detail"></div>

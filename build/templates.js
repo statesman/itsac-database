@@ -3,28 +3,24 @@ define(['handlebars'], function(Handlebars) {
 this["JST"] = this["JST"] || {};
 
 this["JST"]["browse"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-  var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "      <tr>\n        <th>"
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "      <tr>\n        <td><a href=\"#/contractor/"
+    + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
+    + "\">"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
-    + "</th>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
+    + "</a><br /><small>"
     + escapeExpression(((helper = (helper = helpers.vendor || (depth0 != null ? depth0.vendor : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"vendor","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.avgRate || (depth0 != null ? depth0.avgRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"avgRate","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.minRate || (depth0 != null ? depth0.minRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"minRate","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.maxRate || (depth0 != null ? depth0.maxRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"maxRate","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
+    + "</small></td>\n        <td>"
+    + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
+    + "</td>\n        <td>";
+  stack1 = ((helper = (helper = helpers.rate || (depth0 != null ? depth0.rate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rate","hash":{},"data":data}) : helper));
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</td>\n        <td>"
     + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
     + "</td>\n        <td>"
     + escapeExpression(((helper = (helper = helpers.monthsWorked || (depth0 != null ? depth0.monthsWorked : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"monthsWorked","hash":{},"data":data}) : helper)))
     + "</td>\n        <td>"
     + escapeExpression(((helper = (helper = helpers.sales || (depth0 != null ? depth0.sales : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"sales","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td><a href=\"#/contractor/"
-    + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
-    + "\">Details</a></td>\n      </tr>\n";
+    + "</a></td>\n      </tr>\n";
 },"3":function(depth0,helpers,partials,data) {
   return " disabled";
   },"5":function(depth0,helpers,partials,data) {
@@ -38,13 +34,13 @@ this["JST"]["browse"] = Handlebars.template({"1":function(depth0,helpers,partial
     + escapeExpression(((helper = (helper = helpers.nextPage || (depth0 != null ? depth0.nextPage : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"nextPage","hash":{},"data":data}) : helper)))
     + "\"";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<p><small>Showing "
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h3>All entries</h3>\n<p>Showing "
     + escapeExpression(((helper = (helper = helpers.first || (depth0 != null ? depth0.first : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"first","hash":{},"data":data}) : helper)))
     + "-"
     + escapeExpression(((helper = (helper = helpers.last || (depth0 != null ? depth0.last : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"last","hash":{},"data":data}) : helper)))
     + " of "
     + escapeExpression(((helper = (helper = helpers.total || (depth0 != null ? depth0.total : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"total","hash":{},"data":data}) : helper)))
-    + " entries</small></p>\n<table class=\"table table-hover\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Agency</th>\n      <th>Vendor</th>\n      <th>Avg. rate</th>\n      <th>Min. rate</th>\n      <th>Max rate</th>\n      <th>Hours</th>\n      <th>Months</th>\n      <th>Sales</th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n";
+    + " entries. Click a name for additional details.</p>\n\n<table class=\"table table-hover\">\n  <thead>\n    <tr>\n      <th>Contractor</th>\n      <th>Customer</th>\n      <th>Avg.&nbsp;Rate</th>\n      <th>Hours</th>\n      <th>Months</th>\n      <th>Sales</th>\n    </tr>\n  </thead>\n  <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   buffer += "  </tbody>\n</table>\n\n<nav>\n  <ul class=\"pager\">\n    <li class=\"previous";
@@ -64,16 +60,16 @@ this["JST"]["browse"] = Handlebars.template({"1":function(depth0,helpers,partial
 
 this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "      <tr>\n        <th>"
-    + escapeExpression(((helper = (helper = helpers.amount || (depth0 != null ? depth0.amount : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"amount","hash":{},"data":data}) : helper)))
-    + "</th>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
-    + "</td>\n        <td>"
+  return "      <tr>\n        <td>"
     + escapeExpression(((helper = (helper = helpers.month || (depth0 != null ? depth0.month : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"month","hash":{},"data":data}) : helper)))
+    + "</td>\n        <td>"
+    + escapeExpression(((helper = (helper = helpers.level || (depth0 != null ? depth0.level : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"level","hash":{},"data":data}) : helper)))
+    + "</td>\n        <td>"
+    + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
     + "</td>\n        <td>"
     + escapeExpression(((helper = (helper = helpers.rate || (depth0 != null ? depth0.rate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rate","hash":{},"data":data}) : helper)))
     + "</td>\n        <td>"
-    + escapeExpression(((helper = (helper = helpers.level || (depth0 != null ? depth0.level : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"level","hash":{},"data":data}) : helper)))
+    + escapeExpression(((helper = (helper = helpers.amount || (depth0 != null ? depth0.amount : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"amount","hash":{},"data":data}) : helper)))
     + "</td>\n      </tr>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h3>"
@@ -82,40 +78,36 @@ this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partial
     + escapeExpression(((helper = (helper = helpers.vendor || (depth0 != null ? depth0.vendor : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"vendor","hash":{},"data":data}) : helper)))
     + "</small><h3>\n\n<h2>Billing for "
     + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
-    + ":</h2>\n<table class=\"table table-hover\">\n  <thead>\n    <tr>\n      <th>Amount</th>\n      <th>Hours billed</th>\n      <th>Month</th>\n      <th>Hourly rate</th>\n      <th>Title</th>\n    </tr>\n  </thead>\n  <tbody>\n";
+    + ":</h2>\n<table class=\"table\">\n  <thead>\n    <tr>\n      <th>Month</th>\n      <th>Title</th>\n      <th>Hours billed</th>\n      <th>Rate</th>\n      <th>Amount</th>\n    </tr>\n  </thead>\n  <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.transactions : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "  </tbody>\n</table>\n";
 },"useData":true});
 
 this["JST"]["results"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-  var stack1, buffer = "  <table class=\"table table-hover\">\n    <thead>\n      <tr>\n        <th>Name</th>\n        <th>Agency</th>\n        <th>Vendor</th>\n        <th>Avg. rate</th>\n        <th>Min. rate</th>\n        <th>Max rate</th>\n        <th>Hours</th>\n        <th>Months</th>\n        <th>Sales</th>\n        <th></th>\n      </tr>\n    </thead>\n    <tbody>\n";
+  var stack1, buffer = "  <h3>Search results</h3>\n  <p>Not finding what you're looking for? Trying <a href=\"#/browse/page/1\">browsing</a> the database.</p>\n  <table class=\"table table-hover\">\n    <thead>\n      <tr>\n        <th>Contractor</th>\n        <th>Customer</th>\n        <th>Avg.&nbsp;Rate</th>\n        <th>Hours</th>\n        <th>Months</th>\n        <th>Sales</th>\n      </tr>\n    </thead>\n    <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"each","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </tbody>\n  </table>\n";
 },"2":function(depth0,helpers,partials,data) {
-  var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "        <tr>\n          <th>"
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "        <tr>\n          <td><a href=\"#/contractor/"
+    + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
+    + "\">"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
-    + "</th>\n          <td>"
-    + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td>"
+    + "</a><br /><small>"
     + escapeExpression(((helper = (helper = helpers.vendor || (depth0 != null ? depth0.vendor : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"vendor","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td>"
-    + escapeExpression(((helper = (helper = helpers.avgRate || (depth0 != null ? depth0.avgRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"avgRate","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td>"
-    + escapeExpression(((helper = (helper = helpers.minRate || (depth0 != null ? depth0.minRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"minRate","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td>"
-    + escapeExpression(((helper = (helper = helpers.maxRate || (depth0 != null ? depth0.maxRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"maxRate","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td>"
+    + "</small></td>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
+    + "</td>\n          <td>";
+  stack1 = ((helper = (helper = helpers.rate || (depth0 != null ? depth0.rate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rate","hash":{},"data":data}) : helper));
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
     + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.monthsWorked || (depth0 != null ? depth0.monthsWorked : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"monthsWorked","hash":{},"data":data}) : helper)))
     + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.sales || (depth0 != null ? depth0.sales : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"sales","hash":{},"data":data}) : helper)))
-    + "</td>\n          <td><a href=\"#/contractor/"
-    + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
-    + "\">Details</a></td>\n        </tr>\n";
+    + "</a></td>\n        </tr>\n";
 },"4":function(depth0,helpers,partials,data) {
   return "  <div class=\"well\"><strong>No entries match your query.</strong> Try searching by only last name or try <a href=\"#/browse/page/1\">browsing</a> the database to find the contractor you're looking for.</div>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
