@@ -1,8 +1,9 @@
 <h3>{{name}} <small>{{vendor}}</small></h3>
+<p><span class="auto-field">{{vendor}}</span> has billed <span class="auto-field">{{sales}}</span> in sales since the beginning of fiscal year 2014 to <span class="auto-field">{{agency}}</span> for work performed by <span class="auto-field">{{name}}</span>. The table below shows each of the reports to the Department of Information Resources submitted by {{vendor}}.</p>
 
 <div class="row">
   <div class="col-xs-12 col-sm-7 col-md-8">
-    <h2>Billing for {{agency}}:</h2>
+    <h3>Individual sales reports</h3>
     <table class="table">
       <thead>
         <tr>
@@ -28,11 +29,12 @@
   </div>
   <div class="col-xs-12 col-sm-5 col-md-4">
     <div class="panel panel-default">
-      <div class="panel-heading">Top contractors for {{agency}}</div>
+      <div class="panel-heading">{{agency}} top contractors</div>
       <div class="panel-body">
         <table class="table">
           <thead>
             <tr>
+              <th>Rank</th>
               <th>Name</th>
               <th>Sales</th>
             </tr>
@@ -40,6 +42,7 @@
           <tbody>
             {{#each topAgency}}
               <tr{{#if same}} class="active"{{/if}}>
+                <td>{{i}}.</td>
                 <th><a href="#/contractor/{{id}}">{{name}}</a></th>
                 <td>{{amount}}</td>
               </tr>
