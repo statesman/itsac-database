@@ -1,4 +1,4 @@
-define(['backbone', 'views/search', 'views/results', 'views/detail'], function(Backbone, SearchBox, Results, Detail) {
+define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/browse'], function(Backbone, SearchBox, Results, Detail, Browse) {
 
   'use strict';
 
@@ -16,18 +16,26 @@ define(['backbone', 'views/search', 'views/results', 'views/detail'], function(B
     },
 
     routes: {
-      "": "search",
-      "entry/:id": "entry"
+      "": "home",
+      "browse/page/:num": "page",
+      "contractor/:id": "contractor"
     },
 
-    search: function() {
+    home: function() {
+      // Render browsable table
+      this.page(1);
+    },
+
+    page: function(num) {
       // Empty detail view
       if(this.hasOwnProperty('detail')) {
         this.detail.$el.empty();
       }
+
+      this.contractors.page(parseInt(num, 10));
     },
 
-    entry: function(id) {
+    contractor: function(id) {
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
 
@@ -53,6 +61,11 @@ define(['backbone', 'views/search', 'views/results', 'views/detail'], function(B
 
       this.results = new Results({
         el: '#results',
+        collection: this.contractors
+      });
+
+      this.browse = new Browse({
+        el: '#browse',
         collection: this.contractors
       });
     }

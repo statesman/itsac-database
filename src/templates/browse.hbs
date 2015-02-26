@@ -1,0 +1,48 @@
+<p><small>Showing {{first}}-{{last}} of {{total}} entries</small></p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Agency</th>
+      <th>Vendor</th>
+      <th>Avg. rate</th>
+      <th>Min. rate</th>
+      <th>Max rate</th>
+      <th>Hours</th>
+      <th>Months</th>
+      <th>Sales</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each results}}
+      <tr>
+        <th>{{name}}</th>
+        <td>{{agency}}</td>
+        <td>{{vendor}}</td>
+        <td>{{avgRate}}</td>
+        <td>{{minRate}}</td>
+        <td>{{maxRate}}</td>
+        <td>{{hours}}</td>
+        <td>{{monthsWorked}}</td>
+        <td>{{sales}}</td>
+        <td><a href="#/contractor/{{id}}">Details</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<nav>
+  <ul class="pager">
+    <li class="previous{{#unless prevPage}} disabled{{/unless}}">
+      <a {{#if prevPage}}href="#/browse/page/{{prevPage}}"{{/if}} id="prev">
+        <span aria-hidden="true">&larr;</span> Previous
+      </a>
+    </li>
+    <li class="next{{#unless nextPage}} disabled{{/unless}}">
+      <a {{#if nextPage}}href="#/browse/page/{{nextPage}}"{{/if}} id="next">
+        Next <span aria-hidden="true">&rarr;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

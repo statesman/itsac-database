@@ -35,6 +35,18 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
       }
     },
 
+    // The number of results to show per page when browsing
+    perPage: 25,
+
+    // Move to a specific page in the collection
+    page: function(number) {
+      number = number - 1;
+
+      var paginated = this.toJSON().slice((this.perPage * number), (this.perPage * (number + 1)));
+
+      this.trigger('browse:change', number, paginated);
+    },
+
     clearSearch: function() {
       this.lastQ = null;
       this.trigger('search:clear');
