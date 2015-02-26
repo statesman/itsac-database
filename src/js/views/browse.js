@@ -5,7 +5,6 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
   return Backbone.View.extend({
 
     initialize: function() {
-      this.collection.on('search:clear', this.clear, this);
       this.collection.on('browse:change', this.render, this);
     },
 

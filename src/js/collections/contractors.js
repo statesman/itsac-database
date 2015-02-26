@@ -28,12 +28,13 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
         return;
       }
       // Only run queries longer than 3
-      if(q.length > 3) {
+      if(q.length > this.minSearchLength) {
         var r = this.fuse.search(q);
         this.trigger('search', r);
         this.lastQ = q;
       }
     },
+    minSearchLength: 3,
 
     // The number of results to show per page when browsing
     perPage: 25,

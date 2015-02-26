@@ -78,8 +78,9 @@
         <?php /**<p><a href="#">Related story ></a></p> **/ ?>
       </div>
 
-      <div class="form">
-        <input id="search" class="form-control input-lg" type="text" placeholder="Search by last name">
+      <div id="search" class="form-group">
+        <input class="form-control input-lg" type="text" placeholder="Search by last name">
+        <p class="help-block"></p>
       </div>
 
       <div id="detail"></div>

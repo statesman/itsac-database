@@ -22,11 +22,19 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
     },
 
     home: function() {
+      // Empty detail view
+      if(this.hasOwnProperty('detail')) {
+        this.detail.$el.empty();
+      }
+
       // Render browsable table
-      this.page(1);
+      this.contractors.page(1);
     },
 
     page: function(num) {
+      // Empty search results view, clear searh box
+      this.contractors.clearSearch();
+
       // Empty detail view
       if(this.hasOwnProperty('detail')) {
         this.detail.$el.empty();
@@ -38,6 +46,7 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
     contractor: function(id) {
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
+      this.browse.clear();
 
       // Setup detail view
       var self = this;
