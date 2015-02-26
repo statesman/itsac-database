@@ -1,6 +1,25 @@
-<h2>{{name}}, {{agency}}, {{vendor}}</h2>
-<ul>
-{{#each transactions}}
-  <li> {{amount}}, {{hours}}, {{month}}, {{rate}}</li>
-{{/each}}
-</ul>
+<h3>{{name}} <small>{{vendor}}</small><h3>
+
+<h2>Billing for {{agency}}:</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Hours billed</th>
+      <th>Month</th>
+      <th>Hourly rate</th>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each transactions}}
+      <tr>
+        <th>{{amount}}</th>
+        <td>{{hours}}</td>
+        <td>{{month}}</td>
+        <td>{{rate}}</td>
+        <td>{{level}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

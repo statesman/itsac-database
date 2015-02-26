@@ -70,7 +70,7 @@ function buildContractorFile(row, cb) {
   pool.getConnection(function(err, connection) {
     if (err) return cb(err);
 
-    connection.query(contractorQuery, [row.name], function(err, person) {
+    connection.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, person) {
       connection.release();
 
       if(err) return cb(err);
