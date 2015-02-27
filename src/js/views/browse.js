@@ -42,7 +42,9 @@ define(['backbone', 'lib/format', 'tpl'], function(Backbone, format, tpl) {
         last: this.last(number),
         count: this.collection.perPage,
         total: format.wholeNum(this.collection.length),
-        results: format.tableRow(paged)
+        results: format.tableRow(paged),
+        page: number + 1,
+        totalPages: Math.ceil(this.collection.length / this.collection.perPage)
       }));
     },
 

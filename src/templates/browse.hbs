@@ -1,5 +1,5 @@
 <h3>All entries</h3>
-<p>Showing {{first}}-{{last}} of {{total}} entries. Click a name for additional details.</p>
+<p>Showing {{first}} to {{last}} of {{total}} entries. Click a name for additional details.</p>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -35,6 +35,7 @@
         <span aria-hidden="true">&larr;</span> Previous
       </a>
     </li>
+    <li>Page {{page}} of {{totalPages}}</li>
     <li class="next{{#unless nextPage}} disabled{{/unless}}">
       <a {{#if nextPage}}href="#/browse/page/{{nextPage}}"{{/if}} id="next">
         Next <span aria-hidden="true">&rarr;</span>
