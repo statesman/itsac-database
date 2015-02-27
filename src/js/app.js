@@ -2,17 +2,27 @@ require(['jquery', 'collections/contractors', 'collections/agencies', 'lib/route
 
   'use strict';
 
+  // A function to fire up the app, but only after everything has loaded
+  var data = {};
+  var startApp = _.after(2, function() {
+    new Router({
+      contractors: new Contractors(data.contractors),
+      agencies: new Agencies(data.agencies)
+    });
+
+    Backbone.history.start();
+  });
+
   $(function() {
 
-    $.getJSON('data/contractors.json', function(contractorsData) {
-      $.getJSON('data/agencies.json', function(agencyData) {
-        new Router({
-          contractors: new Contractors(contractorsData),
-          agencies: new Agencies(agencyData)
-        });
-
-        Backbone.history.start();
-      });
+    // Load the data
+    $.getJSON('data/contractors.json', function(d) {
+      data.contractors = d;
+      startApp();
+    });
+    $.getJSON('data/agencies.json', function(d) {
+      data.agencies = d;
+      startApp();
     });
 
   });
