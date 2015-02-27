@@ -44,6 +44,10 @@ module.exports = function(grunt) {
         dest: 'public/fonts/',
         flatten: true,
         expand: true
+      },
+      mg: {
+        src: 'bower_components/metrics-graphics/dist/metricsgraphics.css',
+        dest: 'build/metricsgraphics.less'
       }
     },
 
@@ -104,7 +108,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: ['src/css/**.less'],
-        tasks: ['clean:css', 'less']
+        tasks: ['clean:css', 'copy:mg', 'less']
       },
       templates: {
         files: ['src/templates/**/*.hbs'],

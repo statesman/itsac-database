@@ -118,10 +118,10 @@ this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partial
     + escapeExpression(((helper = (helper = helpers.vendor || (depth0 != null ? depth0.vendor : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"vendor","hash":{},"data":data}) : helper)))
     + ".</p>\n<p class=\"doc-links\"><small><i class=\"fa fa-file-text\"></i><a href=\"http://www2.dir.state.tx.us/DIR_Contracts/"
     + escapeExpression(((helper = (helper = helpers.contract || (depth0 != null ? depth0.contract : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"contract","hash":{},"data":data}) : helper)))
-    + ".pdf\" target=\"_blank\">View contract</a></small></p>\n\n<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-7 col-md-8\">\n    <h3>Individual sales reports</h3>\n    <table class=\"table\">\n      <thead>\n        <tr>\n          <th>Month</th>\n          <th>Title</th>\n          <th>Hours billed</th>\n          <th>Rate</th>\n          <th>Amount</th>\n        </tr>\n      </thead>\n      <tbody>\n";
+    + ".pdf\" target=\"_blank\">View contract</a></small></p>\n\n<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-7\">\n    <h3>Individual sales reports</h3>\n    <table class=\"table\">\n      <thead>\n        <tr>\n          <th>Month</th>\n          <th>Title</th>\n          <th>Hours billed</th>\n          <th>Rate</th>\n          <th>Amount</th>\n        </tr>\n      </thead>\n      <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.transactions : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "      </tbody>\n    </table>\n  </div>\n  <div class=\"col-xs-12 col-sm-5 col-md-4\">\n\n  </div>\n</div>\n";
+  return buffer + "      </tbody>\n    </table>\n  </div>\n  <div class=\"col-xs-12 col-sm-5\">\n    <h3>Trends</h3>\n    <h4>Sales by month</h4>\n    <div id=\"sales-chart\"></div>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["JST"]["filters"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
