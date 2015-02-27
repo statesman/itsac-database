@@ -1,20 +1,42 @@
 var mysql = require('mysql'),
     async = require('async'),
     fs = require('fs'),
-    moment = require('moment');
+    _ = require('underscore'),
+    moment = require('moment'),
+    rimraf = require('rimraf');
 
+var concurrentLimit = 10,
+    queryDir = __dirname + '/queries/';
 
-var contractorsQuery = fs.readFileSync('queries/contractors.sql', 'utf8'),
-    contractorQuery = fs.readFileSync('queries/contractor.sql', 'utf8'),
-    topByAgencyQuery = fs.readFileSync('queries/top-agency-contractors.sql', 'utf8');
+var contractorsQuery = fs.readFileSync(queryDir + 'contractors.sql', 'utf8'),
+    contractorQuery = fs.readFileSync(queryDir + 'contractor.sql', 'utf8'),
+    agenciesQuery = fs.readFileSync(queryDir + 'agencies.sql', 'utf8'),
+    agencyQuery = fs.readFileSync(queryDir + 'agency.sql', 'utf8');
 
 async.waterfall([
+  cleanDir,
+  makeDirs,
   dbConnect,
   contractorCollection,
-  contractorModels
+  contractorModels,
+  agencyCollection,
+  agencyModels
 ], function(err, results) {
   if(err) throw err;
 });
+
+// Clean out the old files
+function cleanDir(cb) {
+  rimraf(__dirname + '/public/data', cb);
+}
+
+// Setup the directory structure to hold the files
+function makeDirs(cb) {
+  fs.mkdirSync(__dirname + '/public/data', 0744);
+  fs.mkdirSync(__dirname + '/public/data/contractors', 0744);
+  fs.mkdirSync(__dirname + '/public/data/agencies', 0744);
+  cb(null);
+}
 
 // Connect to the DB
 function dbConnect(cb) {
@@ -23,7 +45,7 @@ function dbConnect(cb) {
     user: 'reporter',
     password: process.argv[2],
     database: 'dir',
-    connectionLimit: 10
+    connectionLimit: concurrentLimit
   });
   cb(null, pool);
 }
@@ -36,18 +58,49 @@ function contractorCollection(pool, cb) {
 
     console.log("Writing contractors.json file.");
 
-    rows = parseRows(rows);
-    fs.writeFileSync('public/data/contractors.json', JSON.stringify(rows));
-    cb(null, pool, rows);
+    var contractors = parseRows(rows);
+    fs.writeFileSync(__dirname + '/public/data/contractors.json', JSON.stringify(rows));
+    cb(null, pool, contractors);
   });
 }
 
 // Build the individual files
-function contractorModels(pool, rows, cb) {
+function contractorModels(pool, contractors, cb) {
   console.log("Building individual contractor files.");
 
-  async.eachLimit(rows, 10, buildContractorFile.bind({
+  async.eachLimit(contractors, concurrentLimit, buildContractorFile.bind({
     pool: pool
+  }), function(err) {
+    if(err) return cb(err);
+    cb(null, contractors, pool);
+  });
+}
+
+// Build the agency collection
+function agencyCollection(contractors, pool, cb) {
+  pool.query(agenciesQuery, function(err, agencies) {
+    if (err) return cb(err);
+
+    // Add the index to each model, which will be used as the id
+    agencies = agencies.map(function(agency, i) {
+      agency.id = i;
+      return agency;
+    });
+
+    console.log("Writing agencies.json file.");
+    fs.writeFileSync(__dirname + '/public/data/agencies.json', JSON.stringify(agencies));
+
+    cb(null, contractors, pool, agencies);
+  });
+}
+
+// Build the individual agency files
+function agencyModels(contractors, pool, agencies, cb) {
+  console.log("Building individual agency files.");
+
+  async.eachLimit(agencies, concurrentLimit, buildAgencyFile.bind({
+    pool: pool,
+    contractors: contractors
   }), function(err) {
     if(err) return cb(err);
 
@@ -56,37 +109,47 @@ function contractorModels(pool, rows, cb) {
   });
 }
 
-
 /*
  * File builders for individual model files
  */
 
 // Build an individual contractor file
 function buildContractorFile(row, cb) {
-  console.log("Building file for", row.name);
+  this.pool.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, transactions) {
+    if(err) return cb(err);
 
-  this.pool.getConnection(function(err, connection) {
-    if (err) return cb(err);
+    // Add the ID to the JSON file
+    row.transactions = transactions.map(function(transaction) {
+      transaction.month = parseDate(transaction.month);
+      return transaction;
+    });
 
-    connection.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, transactions) {
-      connection.release();
-
-      if(err) return cb(err);
-
-      // Add the ID to the JSON file
-      row.transactions = transactions.map(function(transaction) {
-        transaction.month = parseDate(transaction.month);
-        return transaction;
-      });
-
-      fs.writeFile('public/data/contractors/' + row.i + '.json', JSON.stringify(row), function (err) {
-        if (err) return cb(err);
-        cb();
-      });
+    fs.writeFile(__dirname + '/public/data/contractors/' + row.i + '.json', JSON.stringify(row), function (err) {
+      if (err) return cb(err);
+      cb();
     });
   });
 }
 
+// Build an individual agency file
+function buildAgencyFile(agency, cb) {
+  var self = this;
+  this.pool.query(agencyQuery, [agency.agency], function(err, top) {
+    if(err) return cb(err);
+
+    // Add the top contractors to the existing agency data
+    agency.top = top.map(function(contractor, i) {
+      contractor.id = lookupContractor(contractor.name, agency.agency, contractor.vendor, self.contractors);
+      contractor.rank = (i + 1);
+      return contractor;
+    });
+
+    fs.writeFile(__dirname + '/public/data/agencies/' + agency.id + '.json', JSON.stringify(agency), function (err) {
+      if (err) return cb(err);
+      cb();
+    });
+  });
+}
 
 /*
  * Helper functions
@@ -110,4 +173,9 @@ function buildSlug(name, i) {
 // A date parser that turns SQL dates into ISO8601 for JavaScript
 function parseDate(d) {
   return moment(d).toISOString();
+}
+
+// Lookup a contractor's ID based on the passed info
+function lookupContractor(name, agency, vendor, contractors) {
+  return _.findWhere(contractors, {name: name, agency: agency, vendor: vendor}).id;
 }

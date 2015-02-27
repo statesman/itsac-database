@@ -1,4 +1,10 @@
-define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/browse'], function(Backbone, SearchBox, Results, Detail, Browse) {
+define(['backbone',
+  'views/search',
+  'views/results',
+  'views/detail',
+  'views/browse',
+  'views/agencytop'
+], function(Backbone, SearchBox, Results, Detail, Browse, AgencyTop) {
 
   'use strict';
 
@@ -6,6 +12,7 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
 
     initialize: function(options) {
       this.contractors = options.contractors;
+      this.agencies = options.agencies;
 
       // When someone searches, take us back to the search page
       this.contractors.on('search', function() {
@@ -18,14 +25,11 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
     routes: {
       "": "home",
       "browse/page/:num": "page",
-      "contractor/:id": "contractor"
+      "contractor/:id": "detail"
     },
 
     home: function() {
-      // Empty detail view
-      if(this.hasOwnProperty('detail')) {
-        this.detail.$el.empty();
-      }
+      this._clearDetail();
 
       // Render browsable table
       this.contractors.page(1);
@@ -35,21 +39,19 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
 
-      // Empty detail view
-      if(this.hasOwnProperty('detail')) {
-        this.detail.$el.empty();
-      }
+      this._clearDetail();
 
       this.contractors.page(parseInt(num, 10));
     },
 
-    contractor: function(id) {
+    detail: function(id) {
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
       this.browse.clear();
 
-      // Setup detail view
       var self = this;
+
+      // Setup detail view with contractor info
       var contractor = this.contractors.get(id);
       contractor.fetch({
         success: function(model) {
@@ -58,6 +60,18 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
             model: model
           });
           self.detail.render();
+        }
+      });
+
+      // Setup detail view with agency info
+      var agency = this.agencies.findWhere({agency: contractor.get('agency')});
+      agency.fetch({
+        success: function(model) {
+          self.topAgency = new AgencyTop({
+            el: '#agency-top',
+            model: model
+          });
+          self.topAgency.render();
         }
       });
     },
@@ -77,6 +91,16 @@ define(['backbone', 'views/search', 'views/results', 'views/detail', 'views/brow
         el: '#browse',
         collection: this.contractors
       });
+    },
+
+    // Destroy the detail page views
+    _clearDetail: function() {
+      if(this.hasOwnProperty('detail')) {
+        this.detail.$el.empty();
+      }
+      if(this.hasOwnProperty('topAgency')) {
+        this.topAgency.$el.empty();
+      }
     }
 
   });
