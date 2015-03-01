@@ -121,7 +121,7 @@ this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partial
     + ".pdf\" target=\"_blank\">View contract</a></small></p>\n\n<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-7\">\n    <h3>Individual sales reports</h3>\n    <table class=\"table\">\n      <thead>\n        <tr>\n          <th>Month</th>\n          <th>Title</th>\n          <th>Hours billed</th>\n          <th>Rate</th>\n          <th>Amount</th>\n        </tr>\n      </thead>\n      <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.transactions : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "      </tbody>\n    </table>\n  </div>\n  <div class=\"col-xs-12 col-sm-5\">\n    <h3>Trends</h3>\n    <h4>Sales by month</h4>\n    <div id=\"sales-chart\"></div>\n  </div>\n</div>\n";
+  return buffer + "      </tbody>\n    </table>\n  </div>\n  <div class=\"col-xs-12 col-sm-5 charts\">\n    <h4>Sales by month</h4>\n    <div id=\"sales-chart\"></div>\n    <h4>Hours billed by month</h4>\n    <div id=\"hours-chart\"></div>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["JST"]["filters"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {

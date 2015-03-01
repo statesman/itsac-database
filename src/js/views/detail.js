@@ -1,10 +1,48 @@
-define(['backbone', 'underscore', 'tpl', 'lib/format', 'mg'], function(Backbone, _, tpl, format, MG) {
+define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Backbone, _, tpl, format, d3, MG) {
 
   'use strict';
 
   return Backbone.View.extend({
 
     template: tpl.detail,
+
+    // Defaults for the MG charts
+    chartDefaults: {
+      inflator: 1.05,
+      width: 600,
+      full_width: true,
+      height: 250,
+      buffer: 0,
+      left: 40,
+      right: 10,
+      top: 18,
+      bottom: 60,
+      interpolate: 'step-before',
+      xax_format: d3.time.format('%b \'%y'),
+      linked: true,
+      show_tooltips: false,
+      show_secondary_x_label: false,
+      x_accessor: '_month'
+    },
+
+    _chartData: function(data) {
+      return _.chain(data)
+        .groupBy('month')
+        .map(function(transactions) {
+          // Get monthly totals
+          return _.reduce(transactions, function(memo, row) {
+            memo._amount += row._amount;
+            memo.hours += row.hours;
+            return memo;
+          }, {
+            _amount: 0,
+            _month: transactions[0]._month,
+            month: transactions[0].month,
+            hours: 0
+          });
+        })
+        .value();
+    },
 
     render: function() {
       var data = this.model.toJSON();
@@ -25,34 +63,29 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'mg'], function(Backbone,
 
       this.$el.html(this.template(data));
 
-      MG.data_graphic({
-        inflator: 1.05,
-        data: data.transactions,
-        width: 600,
-        full_width: true,
-        height: 250,
-        buffer: 0,
-        left: 35,
-        right: 10,
-        top: 15,
-        bottom: 60,
+      var self = this;
+      var labelTimeFormatter = d3.time.format('%b %Y');
+      data = self._chartData(data.transactions);
+      MG.data_graphic(_.extend({
+        data: data,
+        target: '#hours-chart',
+        y_accessor: 'hours',
+        mouseover: function(d) {
+          self.$('#hours-chart svg .mg-active-datapoint')
+          .html(d.month + ': ' + d.hours);
+        }
+      }, this.chartDefaults));
+
+      MG.data_graphic(_.extend({
+        data: data,
         yax_units: '$',
-        xax_count: function() {
-          var firstYear = data.transactions[0]._month.getFullYear();
-          var lastYear = data.transactions[data.transactions.length - 1]._month.getFullYear();
-          return lastYear - firstYear + 1;
-        },
-        xax_format: function(d) {
-          return d.getFullYear();
-        },
-        interpoloate: 'step',
-        linked: true,
-        show_tooltips: false,
-        show_years: false,
         target: '#sales-chart',
-        x_accessor: '_month',
-        y_accessor: '_amount'
-      });
+        y_accessor: '_amount',
+        mouseover: function(d) {
+          self.$('#sales-chart svg .mg-active-datapoint')
+            .html(d.month + ': ' + format.currency(d._amount));
+        }
+      }, this.chartDefaults));
     }
 
   });
