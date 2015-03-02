@@ -4,23 +4,9 @@ define(['backbone', 'underscore', 'models/contractor', 'lunr'], function(Backbon
 
   return Backbone.Collection.extend({
 
-    initialize: function(models) {
+    initialize: function(models, options) {
       // When the data are loaded, setup the Lunr index
-      this.idx = lunr(function() {
-        this.field('name');
-      });
-
-      // Add all models to the index
-      _.chain(models)
-        .map(function(model) {
-          return {
-            id: model.id,
-            name: model.name
-          };
-        })
-        .each(function(model) {
-          this.idx.add(model);
-        }, this);
+      this.idx = lunr.Index.load(options.idx);
     },
 
     model: Contractor,

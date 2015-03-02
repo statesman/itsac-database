@@ -4,9 +4,11 @@ require(['jquery', 'collections/contractors', 'collections/agencies', 'lib/route
 
   // A function to fire up the app, but only after everything has loaded
   var data = {};
-  var startApp = _.after(2, function() {
+  var startApp = _.after(3, function() {
     new Router({
-      contractors: new Contractors(data.contractors),
+      contractors: new Contractors(data.contractors, {
+        idx: data.idx
+      }),
       agencies: new Agencies(data.agencies)
     });
 
@@ -18,6 +20,10 @@ require(['jquery', 'collections/contractors', 'collections/agencies', 'lib/route
     // Load the data
     $.getJSON('data/contractors.json', function(d) {
       data.contractors = d;
+      startApp();
+    });
+    $.getJSON('data/index.json', function(d) {
+      data.idx = d;
       startApp();
     });
     $.getJSON('data/agencies.json', function(d) {

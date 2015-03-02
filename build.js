@@ -3,7 +3,8 @@ var mysql = require('mysql'),
     fs = require('fs'),
     _ = require('underscore'),
     moment = require('moment'),
-    rimraf = require('rimraf');
+    rimraf = require('rimraf'),
+    lunr = require('lunr');
 
 var concurrentLimit = 10,
     queryDir = __dirname + '/queries/';
@@ -18,9 +19,10 @@ async.waterfall([
   makeDirs,
   dbConnect,
   contractorCollection,
+  buildIndex,
   contractorModels,
   agencyCollection,
-  agencyModels
+  agencyModels,
 ], function(err, results) {
   if(err) throw err;
 });
@@ -62,6 +64,30 @@ function contractorCollection(pool, cb) {
     fs.writeFileSync(__dirname + '/public/data/contractors.json', JSON.stringify(rows));
     cb(null, pool, contractors);
   });
+}
+
+function buildIndex(pool, contractors, cb) {
+  console.log('Building Lunr.js index.');
+
+  // When the data are loaded, setup the Lunr index
+  var index = lunr(function() {
+    this.field('name');
+  });
+
+  // Add all models to the index
+  _.chain(contractors)
+    .map(function(model) {
+      return {
+        id: model.id,
+        name: model.name
+      };
+    })
+    .each(function(model) {
+      index.add(model);
+    });
+
+  fs.writeFileSync(__dirname + '/public/data/index.json', JSON.stringify(index.toJSON()));
+  cb(null, pool, contractors);
 }
 
 // Build the individual files
@@ -159,7 +185,6 @@ function buildAgencyFile(agency, cb) {
 function parseRows(rows) {
  return rows.map(function(row, i) {
    row.i = i;
-   row.searchable = row.name.split(' ');
    row.id = buildSlug(row.name, i);
    return row;
  });
