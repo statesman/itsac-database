@@ -88,6 +88,13 @@
         </div>
       </div>
 
+      <ul id="nav" class="nav nav-tabs nav-justified">
+        <li role="presentation" class="nav-home"><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+        <li role="presentation" class="nav-browse"><a href="#/browse/page/1"><i class="fa fa-table"></i> Browse contractors</a></li>
+        <li role="presentation" class="nav-search disabled"><a href="#"><i class="fa fa-search"></i> Search results</a></li>
+        <li role="presentation" class="nav-detail disabled"><a href="#"><i class="fa fa-user"></i> Contractor details</a></li>
+      </ul>
+
       <div class="row">
         <div class="col-xs-12" id="detail"></div>
         <div class="col-xs-12 col-sm-6" id="agency-top"></div>

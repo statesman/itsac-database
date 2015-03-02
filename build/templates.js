@@ -144,7 +144,7 @@ this["JST"]["results"] = Handlebars.template({"1":function(depth0,helpers,partia
   var stack1, buffer = "";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(4, data),"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer;
+  return buffer + "\n<hr />\n";
 },"useData":true});
 
 this["JST"]["top"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {

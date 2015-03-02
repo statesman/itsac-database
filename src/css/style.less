@@ -15,6 +15,7 @@
 @import 'type.less';
 @import 'search.less';
 @import 'chart.less';
+@import 'nav.less';
 
 @media (min-width: @screen-sm-min) {
   .navbar.navbar-default {
@@ -36,7 +37,7 @@
 }
 
 #detail {
-  margin-bottom: @line-height-computed * 1.5;
+  margin-top: @line-height-computed / 2;
   .doc-links {
     a {
       margin-right: 10px;
@@ -45,6 +46,10 @@
       margin-right: 4px;
     }
   }
+}
+
+#results {
+  margin-top: @line-height-computed;
 }
 
 table.table {

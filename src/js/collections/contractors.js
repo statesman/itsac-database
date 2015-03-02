@@ -16,6 +16,7 @@ define(['backbone', 'underscore', 'models/contractor', 'lunr'], function(Backbon
     search: function(q) {
       // If the query is empty, show top contractors
       if(q.length === 0) {
+        this.trigger('search:empty');
         this.trigger('search:clear');
       }
       // Don't re-run if the query hasn't changed

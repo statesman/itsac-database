@@ -3,8 +3,9 @@ define(['backbone',
   'views/results',
   'views/detail',
   'views/browse',
-  'views/topcontractors'
-], function(Backbone, SearchBox, Results, Detail, Browse, TopContractors) {
+  'views/topcontractors',
+  'views/nav'
+], function(Backbone, SearchBox, Results, Detail, Browse, TopContractors, Nav) {
 
   'use strict';
 
@@ -17,7 +18,11 @@ define(['backbone',
 
       // When someone searches, take us back to the search page
       this.contractors.on('search', function() {
-        this.navigate("", {trigger: true});
+        this.navigate("#/search", {trigger: true});
+      }, this);
+
+      this.contractors.on('search:empty', function() {
+        this.navigate('#/', {trigger: true});
       }, this);
 
       this._setupViews();
@@ -25,12 +30,22 @@ define(['backbone',
 
     routes: {
       "": "home",
+      "search": "search",
       "browse/page/:num": "page",
       "contractor/:id": "detail"
     },
 
     home: function() {
       this._clearDetail();
+      this.nav.setActive('home');
+
+      // Render browsable table
+      this.contractors.page(1);
+    },
+
+    search: function() {
+      this._clearDetail();
+      this.nav.setActive('search');
 
       // Render browsable table
       this.contractors.page(1);
@@ -39,6 +54,7 @@ define(['backbone',
     page: function(num) {
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
+      this.nav.setActive('browse');
 
       this._clearDetail();
 
@@ -49,6 +65,7 @@ define(['backbone',
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
       this.browse.clear();
+      this.nav.setActive('detail');
 
       var self = this;
 
@@ -111,6 +128,10 @@ define(['backbone',
       this.browse = new Browse({
         el: '#browse',
         collection: this.contractors
+      });
+
+      this.nav = new Nav({
+        el: '#nav'
       });
     },
 

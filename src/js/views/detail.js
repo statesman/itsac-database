@@ -94,7 +94,6 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg', 'moment'], fu
       this.$el.html(this.template(data));
 
       var self = this;
-      console.log(self._chartData(data.transactions));
       var labelTimeFormatter = d3.time.format('%b %Y');
       data = self._chartData(data.transactions);
       MG.data_graphic(_.extend({
