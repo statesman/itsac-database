@@ -78,7 +78,11 @@ function buildIndex(pool, contractors, cb) {
 
   // When the data are loaded, setup the Lunr index
   var index = lunr(function() {
+    this.ref('id');
+
     this.field('name');
+    this.field('agency');
+    this.field('vendor');
   });
 
   // Add all models to the index
@@ -86,7 +90,9 @@ function buildIndex(pool, contractors, cb) {
     .map(function(model) {
       return {
         id: model.id,
-        name: model.name
+        name: model.name,
+        agency: model.agency,
+        vendor: model.vendor
       };
     })
     .each(function(model) {

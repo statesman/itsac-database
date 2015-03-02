@@ -1,4 +1,4 @@
-{{#if results}}
+{{#if this}}
   <h3>Search results</h3>
   <p>Not finding what you're looking for? Trying <a href="#/browse/page/1">browsing</a> the database.</p>
   <div class="table-responsive">
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each results}}
+        {{#each this}}
           <tr>
             <td><a href="#/contractor/{{id}}">{{name}}</a><br /><small>{{vendor}}</small></td>
             <td>{{agency}}</td>

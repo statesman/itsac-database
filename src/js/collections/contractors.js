@@ -25,8 +25,19 @@ define(['backbone', 'underscore', 'models/contractor', 'lunr'], function(Backbon
       }
       // Only run queries longer than 3
       if(q.length > this.minSearchLength) {
-        var r = this.idx.search(q);
-        this.trigger('search', this._hydrate(r));
+        var show = 50;
+        // Return all matches, sorted by total sales
+        var r = _.sortBy(this._hydrate(this.idx.search(q)), function(contractor) {
+          return -contractor.sales;
+        });
+        var count = r.length;
+        var trimmed = r.slice(0, show);
+        this.trigger('search', {
+          results: trimmed,
+          count: count,
+          shown: _.min([show, count]),
+          more: count > show
+        });
         this.lastQ = q;
       }
     },

@@ -22,9 +22,13 @@ define(['backbone', 'underscore', 'lib/format'], function(Backbone, _, format) {
     }, 300),
 
     helpText: function(results) {
-      if(results.length > 0) {
-        return results.length + " of " + format.wholeNum(this.collection.length) +
+      if(results.count > 0) {
+        var text = results.count + " of " + format.wholeNum(this.collection.length) +
           " entries match your query.";
+        if(results.more) {
+          text += " Only the top 50 matches are shown below.";
+        }
+        return text;
       }
       return null;
     },

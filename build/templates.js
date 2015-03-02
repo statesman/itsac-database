@@ -114,7 +114,7 @@ this["JST"]["filters"] = Handlebars.template({"1":function(depth0,helpers,partia
 
 this["JST"]["results"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, buffer = "  <h3>Search results</h3>\n  <p>Not finding what you're looking for? Trying <a href=\"#/browse/page/1\">browsing</a> the database.</p>\n  <div class=\"table-responsive\">\n    <table class=\"table table-hover\">\n      <thead>\n        <tr>\n          <th>Contractor</th>\n          <th>Customer</th>\n          <th>Avg.&nbsp;Rate</th>\n          <th>Hours</th>\n          <th>Months</th>\n          <th>Sales</th>\n        </tr>\n      </thead>\n      <tbody>\n";
-  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"each","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
+  stack1 = helpers.each.call(depth0, depth0, {"name":"each","hash":{},"fn":this.program(2, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "      </tbody>\n    </table>\n  </div>\n";
 },"2":function(depth0,helpers,partials,data) {
@@ -140,7 +140,7 @@ this["JST"]["results"] = Handlebars.template({"1":function(depth0,helpers,partia
   return "  <div class=\"well\"><strong>No entries match your query.</strong> Try searching by only last name or try <a href=\"#/browse/page/1\">browsing</a> the database to find the contractor you're looking for.</div>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, buffer = "";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(4, data),"data":data});
+  stack1 = helpers['if'].call(depth0, depth0, {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(4, data),"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer + "\n<hr />\n";
 },"useData":true});
