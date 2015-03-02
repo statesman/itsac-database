@@ -1,4 +1,4 @@
-define(['numeral', 'moment'], function(numeral, moment) {
+define(['underscore', 'numeral', 'moment'], function(_, numeral, moment) {
 
   'use strict';
 
@@ -25,13 +25,13 @@ define(['numeral', 'moment'], function(numeral, moment) {
           '-' + self.currency(row.maxRate) + '</small>';
       }
 
-      return raw.map(function(row) {
-        row.month = self.month(row.month);
+      return _.map(raw, function(row) {
+        row.month = this.month(row.month);
         row.rate = rate(row);
-        row.hours = self.wholeNum(row.hours);
-        row.sales = self.currency(row.sales);
+        row.hours = this.wholeNum(row.hours);
+        row.sales = this.currency(row.sales);
         return row;
-      });
+      }, this);
     }
   };
 

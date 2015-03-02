@@ -81,7 +81,7 @@
       <div id="search" class="well well-lg">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control input-lg" type="text" placeholder="Search by last name">
+            <input class="form-control input-lg" type="text" placeholder="Search by name">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
           </div>
           <p class="help-block"></p>

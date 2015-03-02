@@ -1,16 +1,26 @@
-define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor, Fuse) {
+define(['backbone', 'underscore', 'models/contractor', 'lunr'], function(Backbone, _, Contractor, lunr) {
 
   'use strict';
 
   return Backbone.Collection.extend({
 
     initialize: function(models) {
-      // When the data are loaded, setup the Fuse index
-      var options = {
-        keys: ['searchable'],
-        threshold: 0.3
-      };
-      this.fuse = new Fuse(models, options);
+      // When the data are loaded, setup the Lunr index
+      this.idx = lunr(function() {
+        this.field('name');
+      });
+
+      // Add all models to the index
+      _.chain(models)
+        .map(function(model) {
+          return {
+            id: model.id,
+            name: model.name
+          };
+        })
+        .each(function(model) {
+          this.idx.add(model);
+        }, this);
     },
 
     model: Contractor,
@@ -20,7 +30,6 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
     search: function(q) {
       // If the query is empty, show top contractors
       if(q.length === 0) {
-        // TODO: Fire an evnet that shows top contractors
         this.trigger('search:clear');
       }
       // Don't re-run if the query hasn't changed
@@ -29,12 +38,19 @@ define(['backbone', 'models/contractor', 'fuse'], function(Backbone, Contractor,
       }
       // Only run queries longer than 3
       if(q.length > this.minSearchLength) {
-        var r = this.fuse.search(q);
-        this.trigger('search', r);
+        var r = this.idx.search(q);
+        this.trigger('search', this._hydrate(r));
         this.lastQ = q;
       }
     },
     minSearchLength: 3,
+
+    // Hydrate the search results from Lunr with model info
+    _hydrate: function(results) {
+      return _.map(results, function(result) {
+        return this.get(result.ref).toJSON();
+      }, this);
+    },
 
     // The number of results to show per page when browsing
     perPage: 25,
