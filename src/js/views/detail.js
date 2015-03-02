@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Backbone, _, tpl, format, d3, MG) {
+define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg', 'moment'], function(Backbone, _, tpl, format, d3, MG, moment) {
 
   'use strict';
 
@@ -14,10 +14,10 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Bac
       height: 250,
       buffer: 0,
       left: 40,
-      right: 10,
+      right: 5,
       top: 18,
       bottom: 60,
-      interpolate: 'step-before',
+      interpolate: 'step',
       xax_format: d3.time.format('%b \'%y'),
       linked: true,
       show_tooltips: false,
@@ -26,22 +26,49 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Bac
     },
 
     _chartData: function(data) {
-      return _.chain(data)
-        .groupBy('month')
-        .map(function(transactions) {
-          // Get monthly totals
-          return _.reduce(transactions, function(memo, row) {
-            memo._amount += row._amount;
-            memo.hours += row.hours;
-            return memo;
-          }, {
-            _amount: 0,
-            _month: transactions[0]._month,
-            month: transactions[0].month,
-            hours: 0
-          });
-        })
-        .value();
+      // Get the number of months we should have data for
+      var min = moment(_.min(data, function(d) {
+        return d._month;
+      })._month);
+      var max = moment(_.max(data, function(d) {
+        return d._month;
+      })._month);
+      var days = max.diff(min, 'days');
+
+      // Build an array with an 0-ed object for each month
+      var months = {};
+      _.each(_.range(0, Math.round(days / 30)), function(m) {
+        var addedMonth = min.clone().add(m, 'months');
+        var month = addedMonth.format('MMM YYYY');
+
+        months[month] = [{
+          _amount: 0,
+          _month: addedMonth.toDate(),
+          month: month,
+          hours: 0
+        }];
+      });
+
+      // Reduce transaction data to a sum by month
+      var d = _.groupBy(data, 'month');
+
+      // Merge in the 0 values where there are empty rows
+      var merged = _.extend(months, d);
+
+      // Return a reduced version with totaled values
+      return _.map(merged, function(transactions) {
+        // Get monthly totals
+        return _.reduce(transactions, function(memo, row) {
+          memo._amount += row._amount;
+          memo.hours += row.hours;
+          return memo;
+        }, {
+          _amount: 0,
+          _month: transactions[0]._month,
+          month: transactions[0].month,
+          hours: 0
+        });
+      });
     },
 
     render: function() {
@@ -67,6 +94,7 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Bac
       this.$el.html(this.template(data));
 
       var self = this;
+      console.log(self._chartData(data.transactions));
       var labelTimeFormatter = d3.time.format('%b %Y');
       data = self._chartData(data.transactions);
       MG.data_graphic(_.extend({
