@@ -3,8 +3,8 @@ define(['backbone',
   'views/results',
   'views/detail',
   'views/browse',
-  'views/agencytop'
-], function(Backbone, SearchBox, Results, Detail, Browse, AgencyTop) {
+  'views/topcontractors'
+], function(Backbone, SearchBox, Results, Detail, Browse, TopContractors) {
 
   'use strict';
 
@@ -13,6 +13,7 @@ define(['backbone',
     initialize: function(options) {
       this.contractors = options.contractors;
       this.agencies = options.agencies;
+      this.vendors = options.vendors;
 
       // When someone searches, take us back to the search page
       this.contractors.on('search', function() {
@@ -67,11 +68,31 @@ define(['backbone',
       var agency = this.agencies.findWhere({agency: contractor.get('agency')});
       agency.fetch({
         success: function(model) {
-          self.topAgency = new AgencyTop({
+          self.topAgency = new TopContractors({
             el: '#agency-top',
             model: model
           });
-          self.topAgency.render();
+          self.topAgency.render({
+            organization: contractor.get('agency'),
+            underline: 'vendor',
+            contractor: contractor.id
+          });
+        }
+      });
+
+      // Setup detail view with vendor info
+      var vendor = this.vendors.findWhere({vendor: contractor.get('vendor')});
+      vendor.fetch({
+        success: function(model) {
+          self.topVendor = new TopContractors({
+            el: '#vendor-top',
+            model: model
+          });
+          self.topVendor.render({
+            organization: contractor.get('vendor'),
+            underline: 'agency',
+            contractor: contractor.id
+          });
         }
       });
     },
@@ -100,6 +121,9 @@ define(['backbone',
       }
       if(this.hasOwnProperty('topAgency')) {
         this.topAgency.$el.empty();
+      }
+      if(this.hasOwnProperty('topVendor')) {
+        this.topVendor.$el.empty();
       }
     }
 

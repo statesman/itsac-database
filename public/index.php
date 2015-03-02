@@ -91,6 +91,7 @@
       <div class="row">
         <div class="col-xs-12" id="detail"></div>
         <div class="col-xs-12 col-sm-6" id="agency-top"></div>
+        <div class="col-xs-12 col-sm-6" id="vendor-top"></div>
       </div>
 
       <div id="results"></div>

@@ -1,7 +1,7 @@
-SELECT `Customer Name` as 'agency',
-  `Customer Type` as 'type',
+SELECT `Vendor Name` as 'vendor',
+  `Customer Name` as 'agency',
   ROUND(SUM(`Order Quantity`)) as 'hours',
   ROUND(SUM(`Purchase Amount`)) as 'sales'
 FROM itsac
-GROUP BY `Customer Name`, `Vendor Name`
+GROUP BY `Vendor Name`, `Customer Name`
 ORDER BY `sales` DESC

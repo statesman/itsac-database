@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{{organization}} top contractors</div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each top}}
+          <tr{{#if current}} class="active"{{/if}}>
+            <td>{{rank}}.</td>
+            <td>
+              <strong>
+                {{#unless current}}<a href="#/contractor/{{id}}">{{/unless}}
+                  {{name}}
+                {{#unless current}}</a>{{/unless}}
+              </strong>
+              <br />
+              <small>{{underline}}</small>
+            </td>
+            <td>{{amount}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -12,7 +12,9 @@ var concurrentLimit = 10,
 var contractorsQuery = fs.readFileSync(queryDir + 'contractors.sql', 'utf8'),
     contractorQuery = fs.readFileSync(queryDir + 'contractor.sql', 'utf8'),
     agenciesQuery = fs.readFileSync(queryDir + 'agencies.sql', 'utf8'),
-    agencyQuery = fs.readFileSync(queryDir + 'agency.sql', 'utf8');
+    agencyQuery = fs.readFileSync(queryDir + 'agency.sql', 'utf8'),
+    vendorsQuery = fs.readFileSync(queryDir + 'vendors.sql', 'utf8'),
+    vendorQuery = fs.readFileSync(queryDir + 'vendor.sql', 'utf8');
 
 async.waterfall([
   cleanDir,
@@ -23,20 +25,25 @@ async.waterfall([
   contractorModels,
   agencyCollection,
   agencyModels,
+  vendorCollection,
+  vendorModels
 ], function(err, results) {
   if(err) throw err;
 });
 
 // Clean out the old files
 function cleanDir(cb) {
+  console.log('Cleaning existing data files.');
   rimraf(__dirname + '/public/data', cb);
 }
 
 // Setup the directory structure to hold the files
 function makeDirs(cb) {
+  console.log('Creating directory structure.');
   fs.mkdirSync(__dirname + '/public/data', 0744);
   fs.mkdirSync(__dirname + '/public/data/contractors', 0744);
   fs.mkdirSync(__dirname + '/public/data/agencies', 0744);
+  fs.mkdirSync(__dirname + '/public/data/vendors', 0744);
   cb(null);
 }
 
@@ -130,8 +137,41 @@ function agencyModels(contractors, pool, agencies, cb) {
   }), function(err) {
     if(err) return cb(err);
 
+    cb(null, contractors, pool);
+  });
+}
+
+// Build the vendor collection
+function vendorCollection(contractors, pool, cb) {
+  pool.query(vendorsQuery, function(err, vendors) {
+    if (err) return cb(err);
+
+    // Add the index to each model, which will be used as the id
+    vendors = vendors.map(function(vendor, i) {
+      vendor.id = i;
+      return vendor;
+    });
+
+    console.log("Writing vendors.json file.");
+    fs.writeFileSync(__dirname + '/public/data/vendors.json', JSON.stringify(vendors));
+
+    cb(null, contractors, pool, vendors);
+  });
+}
+
+// Build the individual agency files
+function vendorModels(contractors, pool, vendors, cb) {
+  console.log("Building individual vendor files.");
+
+  async.eachLimit(vendors, concurrentLimit, buildVendorFile.bind({
+    pool: pool,
+    contractors: contractors
+  }), function(err) {
+    if(err) return cb(err);
+
     pool.end();
-    cb(null);
+
+    cb();
   });
 }
 
@@ -171,6 +211,26 @@ function buildAgencyFile(agency, cb) {
     });
 
     fs.writeFile(__dirname + '/public/data/agencies/' + agency.id + '.json', JSON.stringify(agency), function (err) {
+      if (err) return cb(err);
+      cb();
+    });
+  });
+}
+
+// Build an individual agency file
+function buildVendorFile(vendor, cb) {
+  var self = this;
+  this.pool.query(vendorQuery, [vendor.vendor], function(err, top) {
+    if(err) return cb(err);
+
+    // Add the top contractors to the existing agency data
+    vendor.top = top.map(function(contractor, i) {
+      contractor.id = lookupContractor(contractor.name, contractor.agency, vendor.vendor, self.contractors);
+      contractor.rank = (i + 1);
+      return contractor;
+    });
+
+    fs.writeFile(__dirname + '/public/data/vendors/' + vendor.id + '.json', JSON.stringify(vendor), function (err) {
       if (err) return cb(err);
       cb();
     });
