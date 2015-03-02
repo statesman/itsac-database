@@ -57,6 +57,9 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg'], function(Bac
           transaction.rate = format.currency(transaction.rate) + '/hr.';
           transaction._amount = parseInt(transaction.amount, 10);
           transaction.amount = format.currency(transaction.amount);
+          if(transaction._amount < 0) {
+            transaction.negative = true;
+          }
           return transaction;
         })
         .value();

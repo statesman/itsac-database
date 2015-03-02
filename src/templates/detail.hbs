@@ -17,7 +17,7 @@
       </thead>
       <tbody>
         {{#each transactions}}
-          <tr>
+          <tr{{#if negative}} class="danger"{{/if}}>
             <td>{{month}}</td>
             <td>{{level}}</td>
             <td>{{hours}}</td>
