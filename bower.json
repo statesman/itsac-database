@@ -23,6 +23,7 @@
     "numeral": "~1.5.3",
     "moment": "~2.9.0",
     "metrics-graphics": "~2.2.1",
-    "lunr.js": "~0.5.7"
+    "lunr.js": "~0.5.7",
+    "spin.js": "~2.0.2"
   }
 }

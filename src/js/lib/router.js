@@ -12,6 +12,9 @@ define(['backbone',
   return Backbone.Router.extend({
 
     initialize: function(options) {
+      this.spin = options.spin;
+
+      // Store collections
       this.contractors = options.contractors;
       this.agencies = options.agencies;
       this.vendors = options.vendors;
@@ -49,6 +52,8 @@ define(['backbone',
 
       // Render browsable table
       this.contractors.page(1);
+
+      this.spin.stop();
     },
 
     search: function() {
@@ -57,6 +62,8 @@ define(['backbone',
 
       // Render browsable table
       this.contractors.page(1);
+
+      this.spin.stop();
     },
 
     page: function(num) {
@@ -67,9 +74,12 @@ define(['backbone',
       this._clearDetail();
 
       this.contractors.page(parseInt(num, 10));
+
+      this.spin.stop();
     },
 
     detail: function(id) {
+      this.spin.spin();
       this._toTop();
 
       // Empty search results view, clear searh box
@@ -77,6 +87,8 @@ define(['backbone',
       this.nav.setActive('detail');
 
       var self = this;
+
+      var done = _.after(3, this.spin.stop);
 
       // Setup detail view with contractor info
       var contractor = this.contractors.get(id);
@@ -88,6 +100,7 @@ define(['backbone',
           });
           self.detail.render();
           self.browse.clear();
+          done();
         }
       });
 
@@ -104,6 +117,7 @@ define(['backbone',
             underline: 'vendor',
             contractor: contractor.id
           });
+          done();
         }
       });
 
@@ -120,6 +134,7 @@ define(['backbone',
             underline: 'agency',
             contractor: contractor.id
           });
+          done();
         }
       });
     },

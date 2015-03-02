@@ -9,6 +9,7 @@ require.config({
     moment: '../../bower_components/moment/moment',
     d3: '../../bower_components/d3/d3',
     mg: '../../bower_components/metrics-graphics/dist/metricsgraphics',
+    spinner: '../../bower_components/spin.js/spin',
     tpl: '../../build/templates'
   },
   config: {

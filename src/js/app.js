@@ -1,4 +1,4 @@
-require(['jquery', 'collections/contractors', 'collections/agencies', 'collections/vendors', 'lib/router'], function($, Contractors, Agencies, Vendors, Router) {
+require(['jquery', 'collections/contractors', 'collections/agencies', 'collections/vendors', 'lib/router', 'lib/spin'], function($, Contractors, Agencies, Vendors, Router, spin) {
 
   'use strict';
 
@@ -10,13 +10,15 @@ require(['jquery', 'collections/contractors', 'collections/agencies', 'collectio
         idx: data.idx
       }),
       agencies: new Agencies(data.agencies),
-      vendors: new Vendors(data.vendors)
+      vendors: new Vendors(data.vendors),
+      spin: spin
     });
 
     Backbone.history.start();
   });
 
   $(function() {
+    spin.spin();
 
     // Load the data
     $.getJSON('data/contractors.json', function(d) {
