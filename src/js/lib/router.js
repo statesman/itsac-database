@@ -26,6 +26,14 @@ define(['backbone',
       }, this);
 
       this._setupViews();
+
+      // Store the depth of the beginning of the content; we'll scroll back
+      // there each time there's a page change
+      var self = this;
+      this.pageTop = this._contentTop();
+      $(window).on('resize', _.debounce(function() {
+        self.pageTop = self._contentTop();
+      }, 300));
     },
 
     routes: {
@@ -62,9 +70,10 @@ define(['backbone',
     },
 
     detail: function(id) {
+      this._toTop();
+
       // Empty search results view, clear searh box
       this.contractors.clearSearch();
-      this.browse.clear();
       this.nav.setActive('detail');
 
       var self = this;
@@ -78,6 +87,7 @@ define(['backbone',
             model: model
           });
           self.detail.render();
+          self.browse.clear();
         }
       });
 
@@ -145,6 +155,18 @@ define(['backbone',
       }
       if(this.hasOwnProperty('topVendor')) {
         this.topVendor.$el.empty();
+      }
+    },
+
+    // Get the depth of the top of the content
+    _contentTop: function() {
+      return this.nav.$el.offset().top - 23;
+    },
+
+    // Jump to the top of the page; used on route handlers
+    _toTop: function() {
+      if($(window).scrollTop() > this.pageTop) {
+        $(window).scrollTop(this.pageTop);
       }
     }
 

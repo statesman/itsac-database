@@ -142,7 +142,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-ftpush');
+  grunt.loadNpmTasks('grunt-ftpush');
 
   grunt.registerTask('default', ['jshint', 'clean', 'copy', 'less', 'handlebars', 'requirejs']);
 
