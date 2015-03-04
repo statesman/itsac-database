@@ -4,7 +4,8 @@ var mysql = require('mysql'),
     _ = require('underscore'),
     moment = require('moment'),
     rimraf = require('rimraf'),
-    lunr = require('lunr');
+    lunr = require('lunr'),
+    nameparse = require('./lib/nameparser');
 
 var concurrentLimit = 10,
     queryDir = __dirname + '/queries/';
@@ -211,6 +212,7 @@ function buildAgencyFile(agency, cb) {
 
     // Add the top contractors to the existing agency data
     agency.top = top.map(function(contractor, i) {
+      contractor.name = nameclean(contractor.name);
       contractor.id = lookupContractor(contractor.name, agency.agency, contractor.vendor, self.contractors);
       contractor.rank = (i + 1);
       return contractor;
@@ -231,6 +233,7 @@ function buildVendorFile(vendor, cb) {
 
     // Add the top contractors to the existing agency data
     vendor.top = top.map(function(contractor, i) {
+      contractor.name = nameclean(contractor.name);
       contractor.id = lookupContractor(contractor.name, contractor.agency, vendor.vendor, self.contractors);
       contractor.rank = (i + 1);
       return contractor;
@@ -250,8 +253,15 @@ function buildVendorFile(vendor, cb) {
 // Parse the rows before saving them as JSON
 function parseRows(rows) {
  return rows.map(function(row, i) {
+   // Store the rank
    row.i = i;
+
+   // Build a name string
+   row.name = nameclean(row.name);
+
+   // Store a slug that'll be used to build links on the frontend
    row.id = buildSlug(row.name, i);
+
    return row;
  });
 }
@@ -269,4 +279,26 @@ function parseDate(d) {
 // Lookup a contractor's ID based on the passed info
 function lookupContractor(name, agency, vendor, contractors) {
   return _.findWhere(contractors, {name: name, agency: agency, vendor: vendor}).id;
+}
+
+// Clean the name
+function nameclean(input) {
+  var nameParts = nameparse.parse(input);
+  var name = [];
+  if(nameParts.salutation) {
+    name.push(nameParts.salutation);
+  }
+  if(nameParts.firstName) {
+    name.push(nameParts.firstName);
+  }
+  if(nameParts.initials) {
+    name.push(nameParts.initials);
+  }
+  if(nameParts.lastName) {
+    name.push(nameParts.lastName);
+  }
+  if(nameParts.suffix) {
+    name.push(nameParts.suffix);
+  }
+  return name.join(' ');
 }
