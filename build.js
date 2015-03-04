@@ -124,6 +124,8 @@ function agencyCollection(contractors, pool, cb) {
     // Add the index to each model, which will be used as the id
     agencies = agencies.map(function(agency, i) {
       agency.id = i;
+      agency._agency = agency.agency;
+      agency.agency = agencyclean(agency.agency);
       return agency;
     });
 
@@ -188,7 +190,7 @@ function vendorModels(contractors, pool, vendors, cb) {
 
 // Build an individual contractor file
 function buildContractorFile(row, cb) {
-  this.pool.query(contractorQuery, [row.name, row.vendor, row.agency], function(err, transactions) {
+  this.pool.query(contractorQuery, [row.name, row.vendor, row._agency], function(err, transactions) {
     if(err) return cb(err);
 
     // Add the ID to the JSON file
@@ -207,12 +209,13 @@ function buildContractorFile(row, cb) {
 // Build an individual agency file
 function buildAgencyFile(agency, cb) {
   var self = this;
-  this.pool.query(agencyQuery, [agency.agency], function(err, top) {
+  this.pool.query(agencyQuery, [agency._agency], function(err, top) {
     if(err) return cb(err);
 
     // Add the top contractors to the existing agency data
     agency.top = top.map(function(contractor, i) {
       contractor.name = nameclean(contractor.name);
+      contractor.agency = agencyclean(contractor.agency);
       contractor.id = lookupContractor(contractor.name, agency.agency, contractor.vendor, self.contractors);
       contractor.rank = (i + 1);
       return contractor;
@@ -234,6 +237,7 @@ function buildVendorFile(vendor, cb) {
     // Add the top contractors to the existing agency data
     vendor.top = top.map(function(contractor, i) {
       contractor.name = nameclean(contractor.name);
+      contractor.agency = agencyclean(contractor.agency);
       contractor.id = lookupContractor(contractor.name, contractor.agency, vendor.vendor, self.contractors);
       contractor.rank = (i + 1);
       return contractor;
@@ -258,6 +262,9 @@ function parseRows(rows) {
 
    // Build a name string
    row.name = nameclean(row.name);
+
+   row._agency = row.agency;
+   row.agency = agencyclean(row.agency);
 
    // Store a slug that'll be used to build links on the frontend
    row.id = buildSlug(row.name, i);
@@ -300,5 +307,58 @@ function nameclean(input) {
   if(nameParts.suffix) {
     name.push(nameParts.suffix);
   }
-  return name.join(' ');
+  var cleaned = name.join(' ');
+
+  if(names.hasOwnProperty(cleaned)) {
+    return names[cleaned];
+  }
+  return cleaned;
 }
+
+// Clean the agency field
+function agencyclean(input) {
+  if(agencies.hasOwnProperty(input)) {
+    return agencies[input];
+  }
+  return input;
+}
+
+/*
+ * Expection to the rules, DB for names and agencies
+ */
+var names = {
+  'Margo Mccormick': 'Margo McCormick',
+  'It Services For Austin Energy': 'IT Services for Austin Energy',
+  'Chris Mcfarland': 'Chris McFarland',
+  'Chintha,Sreeny': 'Sreeny Chintha',
+  'Gnolfo,Salvatore Arthur': 'Salvatore Arthur Gnolfo',
+  'Randall,Robert': 'Robert Randall',
+  'Whelan,Mark': 'Mark Whelan',
+  'Valls,Teresa': 'Teresa Valls',
+  'Vinton,JoEllen J': 'JoEllen J Vinton',
+  'Hart,Michael Gene': 'Michael Gene Hart',
+  'Butler,Holly Myers': 'Holly Myers Butler',
+  'Privette,Jeffery Scott': 'Jeffery Scott Privette',
+  'Sowell,Alan Bruce': 'Alan Bruce Sowell',
+  'It Services For The Port Of Galveston': 'IT Services for the Port of Galveston'
+};
+
+var agencies = {
+  "Transportation, Texas Department of": "Department of Transportation",
+  "Health and Human Services Commission, Texas": "Health and Human Services Commission",
+  "Information Resources, Department of": "Department of Information Resources",
+  "Public Safety, Texas Department of": "Department of Public Safety",
+  "Texas Department of State Health Services (DSHS)": "Department of State Health Services",
+  "Family & Protective Services, Texas Dept of (DFPS)": "Department of Family and Protective Services",
+  "Aging And Disability Services, Texas Department Of (Dads)": "Department of Aging and Disability Services",
+  "Assistive And Rehabilitative Services, Dept. of (DARS)": "Department of Assistive and Rehabilitative Services",
+  "Texas Commission of Environmental Quality (TNRCC-TCEQ))": "Commission of Environmental Quality",
+  "Criminal Justice, Texas Department of": "Department of Criminal Justice",
+  "Secretary of State, Texas": "Texas Secretary of State",
+  "Housing and Community Affairs, Texas Department of": "Department of Housing and Community Affairs",
+  "Univ Of Texas At San Antonio": "University of Texas at San Antonio",
+  "Alamo Community College District (ACCD)": "Alamo Community College District",
+  "Court Administration, Office of": "Office of Court Administration",
+  "Water Development Board, Texas": "Texas Water Development Board",
+  "Univ of Texas at El Paso": "University of Texas at El Paso"
+};
