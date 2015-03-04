@@ -17,6 +17,7 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg', 'moment'], fu
       right: 5,
       top: 18,
       bottom: 60,
+      point_size: 4,
       interpolate: 'step',
       xax_format: d3.time.format('%b \'%y'),
       linked: true,

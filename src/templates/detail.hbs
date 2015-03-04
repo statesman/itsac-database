@@ -4,28 +4,30 @@
 <div class="row">
   <div class="col-xs-12 col-sm-7">
     <h3>Individual sales reports</h3>
-    <table class="table table-condensed">
-      <thead>
-        <tr>
-          <th>Month</th>
-          <th>Title</th>
-          <th>Hours billed</th>
-          <th>Rate</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each transactions}}
-          <tr{{#if negative}} class="danger"{{/if}}>
-            <td>{{month}}</td>
-            <td>{{level}}</td>
-            <td>{{hours}}</td>
-            <td>{{rate}}</td>
-            <td>{{amount}}</td>
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Title</th>
+            <th>Hours billed</th>
+            <th>Rate</th>
+            <th>Amount</th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {{#each transactions}}
+            <tr{{#if negative}} class="danger"{{/if}}>
+              <td>{{month}}</td>
+              <td>{{level}}</td>
+              <td>{{hours}}</td>
+              <td>{{rate}}</td>
+              <td>{{amount}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="col-xs-12 col-sm-5 charts">
     <h4>Sales by month</h4>
