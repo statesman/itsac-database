@@ -73,7 +73,7 @@
     <article class="container">
       <div class="header">
         <h4>Texas state government</h4>
-        <h1>Search state IT contractors</h1>
+        <h1>IT contractor database</h1>
         <p class="author">Interactive by Andrew Chavez, J. David McSwane and Andrea Ball, American-Statesman</p>
         <p>Use our tool to search billing by state IT contractors.</p>
         <p><a href="http://www.mystatesman.com/flist/news/complete-coverage-21ct/fmq/">Related coverage <i class="fa fa-angle-double-right"></i></a></p>
