@@ -129,6 +129,18 @@ module.exports = function(grunt) {
         exclusions: ['dist/tmp','Thumbs.db'],
         simple: true,
         useList: false
+      },
+      prod: {
+        auth: {
+          host: 'host.coxmediagroup.com',
+          port: 21,
+          authKey: 'cmg'
+        },
+        src: 'public',
+        dest: '/prod_aas/projects/news/itsac-database',
+        exclusions: ['dist/tmp','Thumbs.db'],
+        simple: true,
+        useList: false
       }
     }
 
