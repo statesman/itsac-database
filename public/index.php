@@ -91,7 +91,7 @@
       </div>
 
       <ul id="nav" class="nav nav-tabs nav-justified">
-        <li role="presentation" class="nav-home"><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+        <?php /*<li role="presentation" class="nav-home"><a href="#/"><i class="fa fa-home"></i> Home</a></li> */ ?>
         <li role="presentation" class="nav-browse"><a href="#/browse/page/1"><i class="fa fa-table"></i> Browse contractors</a></li>
         <li role="presentation" class="nav-search disabled"><a href="#"><i class="fa fa-search"></i> Search results</a></li>
         <li role="presentation" class="nav-detail disabled"><a href="#"><i class="fa fa-user"></i> Contractor details</a></li>

@@ -48,7 +48,7 @@ define(['backbone',
 
     home: function() {
       this._clearDetail();
-      this.nav.setActive('home');
+      this.nav.setActive('browse');
 
       // Render browsable table
       this.contractors.page(1);
