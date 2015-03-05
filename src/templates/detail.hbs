@@ -34,5 +34,34 @@
     <div id="sales-chart"></div>
     <h4>Hours billed by month</h4>
     <div id="hours-chart"></div>
+    <h4>Summary</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Total sales</th>
+          <td>{{sales}}</td>
+        </tr>
+        <tr>
+          <th>Total hours billed</th>
+          <td>{{hours}}</td>
+        </tr>
+        <tr>
+          <th>Average rate</th>
+          <td>{{avgRate}}/hr.</td>
+        </tr>
+        <tr>
+          <th>Months worked</th>
+          <td>{{monthsWorked}}</td>
+        </tr>
+        <tr>
+          <th>Average hours per month</th>
+          <td>{{avgPerMonth}}</td>
+        </tr>
+        <tr>
+          <th>Rank<br /><small>By total sales</small></th>
+          <td>{{rank}} of 4,176</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

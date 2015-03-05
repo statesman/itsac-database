@@ -97,7 +97,19 @@ this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partial
     + ".</p>\n\n<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-7\">\n    <h3>Individual sales reports</h3>\n    <div class=\"table-responsive\">\n      <table class=\"table table-condensed\">\n        <thead>\n          <tr>\n            <th>Month</th>\n            <th>Title</th>\n            <th>Hours billed</th>\n            <th>Rate</th>\n            <th>Amount</th>\n          </tr>\n        </thead>\n        <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.transactions : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "        </tbody>\n      </table>\n    </div>\n  </div>\n  <div class=\"col-xs-12 col-sm-5 charts\">\n    <h4>Sales by month</h4>\n    <div id=\"sales-chart\"></div>\n    <h4>Hours billed by month</h4>\n    <div id=\"hours-chart\"></div>\n  </div>\n</div>\n";
+  return buffer + "        </tbody>\n      </table>\n    </div>\n  </div>\n  <div class=\"col-xs-12 col-sm-5 charts\">\n    <h4>Sales by month</h4>\n    <div id=\"sales-chart\"></div>\n    <h4>Hours billed by month</h4>\n    <div id=\"hours-chart\"></div>\n    <h4>Summary</h4>\n    <table class=\"table\">\n      <tbody>\n        <tr>\n          <th>Total sales</th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.sales || (depth0 != null ? depth0.sales : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"sales","hash":{},"data":data}) : helper)))
+    + "</td>\n        </tr>\n        <tr>\n          <th>Total hours billed</th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
+    + "</td>\n        </tr>\n        <tr>\n          <th>Average rate</th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.avgRate || (depth0 != null ? depth0.avgRate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"avgRate","hash":{},"data":data}) : helper)))
+    + "/hr.</td>\n        </tr>\n        <tr>\n          <th>Months worked</th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.monthsWorked || (depth0 != null ? depth0.monthsWorked : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"monthsWorked","hash":{},"data":data}) : helper)))
+    + "</td>\n        </tr>\n        <tr>\n          <th>Average hours per month</th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.avgPerMonth || (depth0 != null ? depth0.avgPerMonth : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"avgPerMonth","hash":{},"data":data}) : helper)))
+    + "</td>\n        </tr>\n        <tr>\n          <th>Rank<br /><small>By total sales</small></th>\n          <td>"
+    + escapeExpression(((helper = (helper = helpers.rank || (depth0 != null ? depth0.rank : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rank","hash":{},"data":data}) : helper)))
+    + " of 4,176</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</div>\n";
 },"useData":true});
 
 this["JST"]["filters"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {

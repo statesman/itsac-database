@@ -74,7 +74,12 @@ define(['backbone', 'underscore', 'tpl', 'lib/format', 'd3', 'mg', 'moment'], fu
 
     render: function() {
       var data = this.model.toJSON();
+      console.log(data);
+      data.rank = data.i + 1;
+      data.avgPerMonth = format.decimal(data.hours / data.monthsWorked);
       data.sales = format.currency(data.sales);
+      data.hours = format.wholeNum(data.hours);
+      data.avgRate = format.currency(data.avgRate);
       data.transactions = _.chain(data.transactions)
         .sortBy(function(transaction) {
           return transaction.month;

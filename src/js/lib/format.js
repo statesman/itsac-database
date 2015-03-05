@@ -6,6 +6,9 @@ define(['underscore', 'numeral', 'moment'], function(_, numeral, moment) {
     currency: function(n) {
       return numeral(n).format('$0,0');
     },
+    decimal: function(n) {
+      return numeral(n).format('0.0');
+    },
     wholeNum: function(n) {
       return numeral(n).format('0,0');
     },
