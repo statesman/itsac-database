@@ -6,10 +6,10 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <?php
       $meta = array(
-        'title' => 'Exploring biggest spendors, vendors in state technology',
-        'description' => 'A Statesman analysis of 3.2 million transactions highlights the vendors and agencies that have made the greatest use of the Texas Department of Information Resources. Our interactive charts the relationships between the 20 agencies and vendors who spent and received the most through the DIR. Combined, they account for about 180,000 transactions worth more than $1.35 billion in sales.',
-        'thumbnail' => 'http://projects.statesman.com/news/dir-big-spenders/assets/sankey-mobile.png',
-        'url' => 'http://projects.statesman.com/news/dir-big-spenders/',
+        'title' => 'Search Texas government IT contractor spending',
+        'description' => 'Our database uses sales reports made by vendors to the Department of Information Resources to show how much the government agencies have paid for specific contractors since the beginning of fiscal year 2010.',
+        'thumbnail' => 'http://projects.statesman.com/news/itsac-database/assets/share.png',
+        'url' => 'http://projects.statesman.com/news/itsac-database/',
         'twitter' => 'statesman'
       );
     ?>
@@ -73,11 +73,11 @@
     <article class="container">
       <div class="header">
         <h4>Texas state government</h4>
-        <h1>IT contractor database</h1>
+        <h1>Search Texas government IT contractor spending</h1>
         <p class="author">Interactive by Andrew Chavez, J. David McSwane and Andrea Ball, American-Statesman</p>
-        <p>Use our tool to search billing by state IT contractors.</p>
-        <p><a href="http://www.mystatesman.com/flist/news/complete-coverage-21ct/fmq/">Related coverage <i class="fa fa-angle-double-right"></i></a></p>
-        <?php /**<p><a href="#">Related story ></a></p> **/ ?>
+        <p>An American-Statesman investigation has found that the state’s use of information technology contractors faces little to no oversight. Tens of millions have been paid to at least 3,000 contract workers working for 210 companies, all while avoiding competitive bidding and public scrutiny.</p>
+        <p>Our database uses sales reports made by vendors to the Department of Information Resources to show how much the government agencies have paid for specific contractors since the beginning of fiscal year 2010.</p>
+        <p><a href="http://projects.statesman.com/news/itsac-top-paid/">Related: See how costs for top contractors compare with top-paid state employees <i class="fa fa-angle-double-right"></i></a></p>
       </div>
 
       <div id="search" class="well well-lg">
