@@ -3,24 +3,24 @@ define(['handlebars'], function(Handlebars) {
 this["JST"] = this["JST"] || {};
 
 this["JST"]["browse"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "        <tr>\r\n          <td><a href=\"#/contractor/"
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "        <tr>\n          <td><a href=\"#/contractor/"
     + escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"id","hash":{},"data":data}) : helper)))
     + "\">"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "</a><br /><small>"
     + escapeExpression(((helper = (helper = helpers.vendor || (depth0 != null ? depth0.vendor : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"vendor","hash":{},"data":data}) : helper)))
-    + "</small></td>\r\n          <td>"
+    + "</small></td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.agency || (depth0 != null ? depth0.agency : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"agency","hash":{},"data":data}) : helper)))
-    + "</td>\r\n          <td>";
+    + "</td>\n          <td>";
   stack1 = ((helper = (helper = helpers.rate || (depth0 != null ? depth0.rate : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"rate","hash":{},"data":data}) : helper));
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\r\n          <td>"
+  return buffer + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.hours || (depth0 != null ? depth0.hours : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"hours","hash":{},"data":data}) : helper)))
-    + "</td>\r\n          <td>"
+    + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.monthsWorked || (depth0 != null ? depth0.monthsWorked : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"monthsWorked","hash":{},"data":data}) : helper)))
-    + "</td>\r\n          <td>"
+    + "</td>\n          <td>"
     + escapeExpression(((helper = (helper = helpers.sales || (depth0 != null ? depth0.sales : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"sales","hash":{},"data":data}) : helper)))
-    + "</a></td>\r\n        </tr>\r\n";
+    + "</a></td>\n        </tr>\n";
 },"3":function(depth0,helpers,partials,data) {
   return " disabled";
   },"5":function(depth0,helpers,partials,data) {
@@ -34,32 +34,32 @@ this["JST"]["browse"] = Handlebars.template({"1":function(depth0,helpers,partial
     + escapeExpression(((helper = (helper = helpers.nextPage || (depth0 != null ? depth0.nextPage : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"nextPage","hash":{},"data":data}) : helper)))
     + "\"";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h3>All entries</h3>\r\n<p>Showing "
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<h3>All entries</h3>\n<p>Showing "
     + escapeExpression(((helper = (helper = helpers.first || (depth0 != null ? depth0.first : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"first","hash":{},"data":data}) : helper)))
     + " to "
     + escapeExpression(((helper = (helper = helpers.last || (depth0 != null ? depth0.last : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"last","hash":{},"data":data}) : helper)))
     + " of "
     + escapeExpression(((helper = (helper = helpers.total || (depth0 != null ? depth0.total : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"total","hash":{},"data":data}) : helper)))
-    + " entries. Click a name for additional details.</p>\r\n\r\n<div class=\"table-responsive\">\r\n  <table class=\"table table-hover\">\r\n    <thead>\r\n      <tr>\r\n        <th>Contractor</th>\r\n        <th>Customer</th>\r\n        <th>Avg.&nbsp;Rate</th>\r\n        <th>Hours</th>\r\n        <th>Months</th>\r\n        <th>Sales</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n";
+    + " entries. Click a name for additional details.</p>\n\n<div class=\"table-responsive\">\n  <table class=\"table table-hover\">\n    <thead>\n      <tr>\n        <th>Contractor</th>\n        <th>Customer</th>\n        <th>Avg.&nbsp;Rate</th>\n        <th>Hours</th>\n        <th>Months</th>\n        <th>Sales</th>\n      </tr>\n    </thead>\n    <tbody>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.results : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "    </tbody>\r\n  </table>\r\n</div>\r\n\r\n<nav>\r\n  <ul class=\"pager\">\r\n    <li class=\"previous";
+  buffer += "    </tbody>\n  </table>\n</div>\n\n<nav>\n  <ul class=\"pager\">\n    <li class=\"previous";
   stack1 = helpers.unless.call(depth0, (depth0 != null ? depth0.prevPage : depth0), {"name":"unless","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\">\r\n      <a ";
+  buffer += "\">\n      <a ";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.prevPage : depth0), {"name":"if","hash":{},"fn":this.program(5, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += " id=\"prev\">\r\n        <span aria-hidden=\"true\">&larr;</span> Previous\r\n      </a>\r\n    </li>\r\n    <li class=\"hidden-xs\">Page "
+  buffer += " id=\"prev\">\n        <span aria-hidden=\"true\">&larr;</span> Previous\n      </a>\n    </li>\n    <li class=\"hidden-xs\">Page "
     + escapeExpression(((helper = (helper = helpers.page || (depth0 != null ? depth0.page : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"page","hash":{},"data":data}) : helper)))
     + " of "
     + escapeExpression(((helper = (helper = helpers.totalPages || (depth0 != null ? depth0.totalPages : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"totalPages","hash":{},"data":data}) : helper)))
-    + "</li>\r\n    <li class=\"next";
+    + "</li>\n    <li class=\"next";
   stack1 = helpers.unless.call(depth0, (depth0 != null ? depth0.nextPage : depth0), {"name":"unless","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\">\r\n      <a ";
+  buffer += "\">\n      <a ";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.nextPage : depth0), {"name":"if","hash":{},"fn":this.program(7, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + " id=\"next\">\r\n        Next <span aria-hidden=\"true\">&rarr;</span>\r\n      </a>\r\n    </li>\r\n  </ul>\r\n</nav>\r\n";
+  return buffer + " id=\"next\">\n        Next <span aria-hidden=\"true\">&rarr;</span>\n      </a>\n    </li>\n  </ul>\n</nav>\n";
 },"useData":true});
 
 this["JST"]["detail"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
