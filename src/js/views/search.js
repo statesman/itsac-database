@@ -16,7 +16,7 @@ define(['backbone', 'underscore', 'lib/format'], function(Backbone, _, format) {
     searchHandler: _.debounce(function(e) {
       var q = e.currentTarget.value;
       if(q.length > 0 && q.length <= this.collection.minSearchLength) {
-        this.$help.text('Your query must be at least four characters long.');
+        this.$help.text('Your query must be at least three characters long.');
       }
       this.collection.search(q);
     }, 300),

@@ -41,7 +41,7 @@ define(['backbone', 'underscore', 'models/contractor', 'lunr'], function(Backbon
         this.lastQ = q;
       }
     },
-    minSearchLength: 3,
+    minSearchLength: 2,
 
     // Hydrate the search results from Lunr with model info
     _hydrate: function(results) {
